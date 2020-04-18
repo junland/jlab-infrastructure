@@ -1,0 +1,14 @@
+---
+- name: Configure motd (CentOS / Red Hat / Fedora)
+  copy:
+    src: motd
+    dest: "/etc/motd"
+    owner: root
+    group: root
+  when: ansible_os_family == 'RedHat'
+
+- name: Put SELinux in permissive mode (CentOS / Red Hat / Fedora)
+  selinux:
+    policy: targeted
+    state: permissive
+  when: ansible_os_family == 'RedHat' and not docker_testing

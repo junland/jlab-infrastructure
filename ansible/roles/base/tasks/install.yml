@@ -1,0 +1,60 @@
+---
+- name: Check if EPEL repo is already configured
+  stat:
+    path: "{{ epel_repofile_path }}"
+  register: epel_repofile_result
+  when: ansible_os_family == 'RedHat'
+
+- name: Install EPEL repo
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: "{{ epel_repo_url }}"
+    state: present
+  register: result
+  until: result is succeeded
+  retries: 5
+  delay: 10
+  when: not epel_repofile_result.stat.exists and ansible_os_family == 'RedHat'
+  
+- name: Import EPEL GPG key
+  rpm_key:
+    key: "{{ epel_repo_gpg_key_url }}"
+    state: present
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: not epel_repofile_result.stat.exists and ansible_os_family == 'RedHat'
+
+- name: Install git
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: git
+    state: latest
+
+- name: Install make
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: make
+    state: latest
+
+- name: Install wget
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: wget
+    state: latest
+
+- name: Install curl
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: curl
+    state: latest
+
+- name: Install htop
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: htop
+    state: latest
+
+- name: Install nmon
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: nmon
+    state: latest

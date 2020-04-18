@@ -1,0 +1,59 @@
+---
+- name: Remove nginx conf.d directory
+  file:
+    path: /etc/nginx/conf.d
+    state: absent
+
+- name: Remove goaccess.conf file
+  file:
+    path: /etc/goaccess.conf
+    state: absent
+
+- name: Remove nginx.conf file
+  file:
+    path: /etc/nginx/nginx.conf
+    state: absent
+
+- name: Create a sites-available
+  file:
+    path: /etc/nginx/sites-available
+    state: directory
+    mode: '0655'
+
+- name: Create a sites-enabled
+  file:
+    path: /etc/nginx/sites-enabled
+    state: directory
+    mode: '0655'
+
+- name: Install new default nginx configuration
+  copy:
+    src: nginx.conf
+    dest: "/etc/nginx/nginx.conf"
+
+- name: Install new default goaccess configuration
+  copy:
+    src: goaccess.conf
+    dest: "/etc/goaccess.conf"
+    owner: root
+    group: root
+
+- name: Recursively change ownership of nginx directory
+  file:
+    path: /etc/nginx
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+
+- name: Enable nginx service
+  service:
+    name: nginx
+    enabled: yes
+  when: not docker_testing
+
+- name: Start nginx service, if not started
+  service:
+    name: nginx
+    state: started
+  when: not docker_testing

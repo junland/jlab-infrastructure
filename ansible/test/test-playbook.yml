@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  vars:
+    docker_testing: true 
+  connection: local
+  roles:
+    - base
+    - web
+
+  
