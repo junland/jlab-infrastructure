@@ -1,0 +1,41 @@
+FROM centos:latest
+
+ARG GOACCESS_VER=1.3
+
+ENV PKG_DIR=/work/package-output
+
+WORKDIR /
+
+RUN mkdir /work && mkdir -p $PKG_DIR
+
+RUN dnf update -y && dnf groupinstall "Development Tools" -y && dnf install git wget curl rpm-build epel-release -y && dnf clean all
+
+RUN dnf install openssl-libs openssl-devel GeoIP-devel ncurses-devel -y
+
+## Source Build
+
+RUN wget https://tar.goaccess.io/goaccess-$GOACCESS_VER.tar.gz -O source.tar.gz
+
+RUN tar -xvf ./source.tar.gz -C /work --strip 1
+
+WORKDIR /work
+
+RUN ./configure --enable-utf8 --enable-geoip=legacy --with-openssl --with-getline
+
+RUN make prefix=/usr sysconfdir=/etc
+
+RUN make prefix="$PKG_DIR/usr" sysconfdir="$PKG_DIR/etc" install
+
+## RPM Build
+
+RUN mkdir -p /rpmbuild/{RPMS,SRPMS,BUILD,SOURCES,SPECS,tmp}
+
+COPY defs/goaccess.spec /rpmbuild/SPECS
+
+COPY defs/rpmmacros /root/.rpmmacros
+
+RUN tar -zcvf /rpmbuild/SOURCES/goaccess-$GOACCESS_VER.tar.gz package-output --transform "s/package-output/goaccess-$GOACCESS_VER/"
+
+RUN tar -tvf /rpmbuild/SOURCES/goaccess-${GOACCESS_VER}.tar.gz
+
+RUN rpmbuild -ba /rpmbuild/SPECS/goaccess.spec
