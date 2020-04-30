@@ -1,0 +1,31 @@
+#!/bin/bash
+## SPDX-License-Identifier: MIT
+# Copyright (C) 2020 John Unland
+
+LOGFILE=${VARIABLE:="/var/log/nginx/*.access.log"}
+
+if [ ! -f "$LOGFILE" ] ; then
+    echo "$LOGFILE does not exist or is not a file..."
+        exit 1
+fi
+
+awk '{print $1}' $LOGFILE | sort | uniq -c | sort -nr > /tmp/web_ips.list
+
+echo "=====> Report as of $(date) <===="
+
+while read line; do
+  IP=$(echo $line | awk '{print $2}')
+  COUNT=$(echo $line | awk '{print $1}')
+  echo "===> Seaching for $IP with $COUNT hit(s) on this server."
+  whois $IP > /tmp/query.txt
+  cat /tmp/query.txt | grep "OrgName:"
+  cat /tmp/query.txt | grep "OrgId:"
+  cat /tmp/query.txt | grep "Address:"
+  cat /tmp/query.txt | grep "City:"
+  cat /tmp/query.txt | grep "StateProv:"
+  cat /tmp/query.txt | grep "Country:"
+  cat /tmp/query.txt | grep "OrgTechName:"
+  cat /tmp/query.txt | grep "OrgAbuseEmail:"
+done < /tmp/web_ips.list
+
+exit 0

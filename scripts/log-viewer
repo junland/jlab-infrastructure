@@ -1,0 +1,33 @@
+#!/bin/bash
+## SPDX-License-Identifier: MIT
+# Copyright (C) 2020 John Unland
+
+LOG_DIR=/var/log/nginx
+
+if [ "$1" == "-h" ]; then
+  echo "Usage: nginx-logs"
+  echo "Menu driven script to read nginx log files."
+  echo ""
+  exit 0
+fi
+
+unset options i
+while IFS= read -r -d $'\0' f; do
+  options[i++]="$f"
+done < <(find $LOG_DIR -maxdepth 1 -type f -name "*.log" -print0 )
+
+select opt in "${options[@]}" "exit"; do
+  case $opt in
+    *.log)
+      tail -150f $opt
+      ;;
+    "exit")
+      exit 0
+      ;;
+    *)
+      echo "This is not a valid option"
+      ;;
+  esac
+done
+
+exit 0
