@@ -58,3 +58,20 @@
   args:
     name: nmon
     state: latest
+
+- name: Get monitoring package (Prometheus Node Exporter)
+  get_url:
+    url: https://github.com/prometheus/node_exporter/releases/download/v{{ mon_ver }}/node_exporter-{{ mon_ver }}.linux-amd64.tar.gz
+    dest: /tmp/node_exporter-{{ mon_ver }}.linux-amd64.tar.gz
+
+- name: Extract monitoring package (Prometheus Node Exporter)
+  unarchive:
+    src: /tmp/node_exporter-{{ mon_ver }}.linux-amd64.tar.gz
+    dest: /tmp/
+    exclude:
+     - LICENSE
+     - NOTICE
+
+- name: Install monitoring package (Prometheus Node Exporter)
+  command: mv /tmp/node_exporter-{{ mon_ver }}.linux-amd64/node_exporter /usr/local/bin
+

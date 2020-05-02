@@ -4,15 +4,13 @@ RUN mkdir /work
 
 WORKDIR /work
 
-RUN dnf update -y && dnf install epel-release -y && dnf install sudo ansible python3-libselinux -y
+RUN dnf update -y && dnf install epel-release -y && dnf install tree sudo ansible python3-libselinux -y
 
 RUN dnf remove epel-release -y
 
 RUN rm -rf /etc/*epel.repo
 
 COPY ./ .
-
-RUN ls
 
 RUN mv ./test/test-playbook.yml ./
 
