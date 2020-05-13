@@ -13,6 +13,16 @@ License: GPLv2+
 Group: Applications/Utilities
 URL: http://goaccess.io 
 SOURCE0 : %{name}-%{version}.tar.gz
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  gcc
+BuildRequires:  GeoIP-devel
+BuildRequires:  ncurses-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  gcc
+BuildRequires:  GeoIP-devel
+BuildRequires:  ncurses-devel
 
 %description
 An open source real-time web log analyzer and interactive viewer that runs in a terminal in *nix systems. It provides fast and valuable HTTP statistics for system administrators that require a visual server report on the fly.
