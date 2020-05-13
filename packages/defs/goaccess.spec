@@ -14,20 +14,18 @@ Group: Applications/Utilities
 URL: http://goaccess.io 
 SOURCE0 : %{name}-%{version}.tar.gz
 
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-
 %description
 An open source real-time web log analyzer and interactive viewer that runs in a terminal in *nix systems. It provides fast and valuable HTTP statistics for system administrators that require a visual server report on the fly.
 
 %prep
-%autosetup -p1
+%autosetup
 # Prevent flags being overridden again and again.
 #sed -i 's|-pthread|$CFLAGS \0|' configure.ac
 sed -i '/-pthread/d' configure.ac
 
 %build
-	
-%configure --enable-debug --enable-geoip --enable-utf8 --enable-tcb=btree --with-getline
+autoreconf -fiv
+%configure --enable-geoip --enable-utf8 --with-getline --with-openssl
 
 %make_build
 

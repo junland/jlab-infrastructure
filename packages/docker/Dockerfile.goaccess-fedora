@@ -12,30 +12,16 @@ RUN dnf update -y && dnf groupinstall "Development Tools" -y && dnf install git 
 
 RUN dnf install openssl-libs openssl-devel GeoIP-devel ncurses-devel -y
 
-## Source Build
-
-RUN wget https://github.com/allinurl/goaccess/archive/v$GOACCESS_VER.tar.gz -O source.tar.gz
-
-RUN tar -xvf ./source.tar.gz -C /work --strip 1
-
-WORKDIR /work
-
-RUN ./configure --enable-utf8 --enable-geoip=legacy --with-openssl --with-getline
-
-RUN make prefix=/usr sysconfdir=/etc
-
-RUN make prefix="$PKG_DIR/usr" sysconfdir="$PKG_DIR/etc" install
-
 ## RPM Build
 
 RUN mkdir -p /rpmbuild/{RPMS,SRPMS,BUILD,SOURCES,SPECS,tmp}
 
+WORKDIR /rpmbuild
+
+RUN wget https://github.com/allinurl/goaccess/archive/v$GOACCESS_VER.tar.gz -O SOURCES/goaccess-${GOACCESS_VER}.tar.gz
+
 COPY defs/goaccess.spec /rpmbuild/SPECS
 
 COPY defs/rpmmacros /root/.rpmmacros
-
-RUN tar -zcvf /rpmbuild/SOURCES/goaccess-$GOACCESS_VER.tar.gz package-output --transform "s/package-output/goaccess-$GOACCESS_VER/"
-
-RUN tar -tvf /rpmbuild/SOURCES/goaccess-${GOACCESS_VER}.tar.gz
 
 RUN rpmbuild -ba /rpmbuild/SPECS/goaccess.spec
