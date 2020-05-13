@@ -1,4 +1,4 @@
-FROM fedora:latest
+FROM docker.io/fedora:latest
 
 ARG ZNC_VER=1.7.5
 
