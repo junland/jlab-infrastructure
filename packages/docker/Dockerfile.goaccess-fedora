@@ -14,7 +14,7 @@ RUN dnf install openssl-libs openssl-devel GeoIP-devel ncurses-devel -y
 
 ## Source Build
 
-RUN wget https://tar.goaccess.io/goaccess-$GOACCESS_VER.tar.gz -O source.tar.gz
+RUN wget https://github.com/allinurl/goaccess/archive/v$GOACCESS_VER.tar.gz -O source.tar.gz
 
 RUN tar -xvf ./source.tar.gz -C /work --strip 1
 
