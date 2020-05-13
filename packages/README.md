@@ -1,6 +1,6 @@
 # Packages
 
-This repo is for creating arbitrary packages that are not supplied by OS distribution repositories.
+This repo is for creating packages that are not supplied by OS distribution repositories.
 
 ## Notes
 
