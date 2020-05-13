@@ -26,12 +26,18 @@
     state: directory
     mode: '0655'
 
-- name: Install new default nginx configuration
+- name: Add new default nginx configuration
   copy:
     src: nginx.conf
     dest: "/etc/nginx/nginx.conf"
 
-- name: Install new default goaccess configuration
+- name: Add available sites
+  copy:
+    src: sites/{{ item }}
+    dest: "/etc/nginx/sites-available/{{ item }}"
+  with_items: "{{ available_sites }}"
+
+- name: Add new default goaccess configuration
   copy:
     src: goaccess.conf
     dest: "/etc/goaccess.conf"

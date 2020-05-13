@@ -5,3 +5,11 @@ epel_repo_gpg_key_url: "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-8"
 epel_repofile_path: "/etc/yum.repos.d/epel.repo"
 
 mon_ver: "0.18.1"
+
+motd_intro: " Welcome to the jlab.space infrastructure node."
+motd_info:
+    - " FQDN:    ": "{{ ansible_fqdn }}"
+    - " Distro:  ": "{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+    - " Virtual: ": "{{ 'YES' if ansible_virtualization_role == 'guest' else 'NO' }}"
+    - " CPUs:    ": "{{ ansible_processor_vcpus }}"
+    - " RAM:     ": "{{ (ansible_memtotal_mb / 1000) | round(1) }}GB"

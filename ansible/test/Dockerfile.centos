@@ -15,3 +15,7 @@ COPY ./ .
 RUN mv ./test/test-playbook.yml ./
 
 RUN ansible-playbook --become-user root test-playbook.yml
+
+RUN ls -la /etc/nginx/sites-enabled
+
+RUN cat /etc/motd

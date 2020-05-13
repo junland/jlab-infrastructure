@@ -37,7 +37,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/
 
 %changelog
 * Sat Apr 18 2020  John Unland <unlandj@jlab.space> 1.3-1

@@ -1,10 +1,8 @@
 ---
 - name: Configure motd (CentOS / Red Hat / Fedora)
-  copy:
-    src: motd
-    dest: "/etc/motd"
-    owner: root
-    group: root
+  template:
+    src: motd.j2
+    dest: /etc/motd
   when: ansible_os_family == 'RedHat'
 
 - name: Put SELinux in permissive mode (CentOS / Red Hat / Fedora)

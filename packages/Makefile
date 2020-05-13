@@ -12,7 +12,7 @@ goaccess:
 	mkdir -p output/
 	$(CENGINE) build -f ./docker/Dockerfile.goaccess-centos -t goaccess-package-$(MAKE_RAND) . && $(CENGINE) create -ti --name goaccess-dummy goaccess-package-$(MAKE_RAND) && $(CENGINE) cp goaccess-dummy:/rpmbuild/RPMS/. output
 	$(CENGINE) rm -f goaccess-dummy && $(CENGINE) rmi goaccess-package-$(MAKE_RAND)
-	$(CENGINE) build -f ./docker/Dockerfile.goaccess-fedora -t goaccess-package-$(MAKE_RAND) . && $(CENGINE) create -ti --name goaccess-dummy  goaccess-package-$(MAKE_RAND) && $(CENGINE) cp goaccess-dummy:/rpmbuild/RPMS/. output
+	$(CENGINE) build -f ./docker/Dockerfile.goaccess-fedora -t goaccess-package-$(MAKE_RAND) . && $(CENGINE) create -ti --name goaccess-dummy goaccess-package-$(MAKE_RAND) && $(CENGINE) cp goaccess-dummy:/rpmbuild/RPMS/. output
 	$(CENGINE) rm -f goaccess-dummy && $(CENGINE) rmi goaccess-package-$(MAKE_RAND)
 
 .PHONY: znc

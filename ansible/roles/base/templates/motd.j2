@@ -1,0 +1,6 @@
+{{ motd_intro }}
+{% for item in motd_info %}
+{% for key, value in item.items() %}
+{{ key }}{{ value }}
+{% endfor %}
+{% endfor %}
