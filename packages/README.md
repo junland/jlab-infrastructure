@@ -42,3 +42,7 @@ jfrog bt vc junland/jlab/<program name>/<version name>
 ```
 jfrag bt u "somedir/*.rpm" junland/jlab/<program name>/<version name> DISTRO/VER/ARCH/RPMS
 ```
+
+## Helpful Links
+
+* https://blog.packagecloud.io/eng/2014/11/24/howto-gpg-sign-verify-rpm-packages-yum-repositories/
