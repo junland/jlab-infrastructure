@@ -8,7 +8,7 @@ WORKDIR /
 
 RUN mkdir /work && mkdir -p $PKG_DIR
 
-RUN dnf update -y && dnf groupinstall "Development Tools" -y && dnf install git wget curl rpm-build -y && dnf clean all
+RUN dnf update -y && dnf groupinstall "Development Tools" -y && dnf install git wget curl rpm-build autoconf -y && dnf clean all
 
 RUN dnf install openssl-libs openssl-devel GeoIP-devel ncurses-devel -y
 
