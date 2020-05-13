@@ -10,3 +10,19 @@
     policy: targeted
     state: permissive
   when: ansible_os_family == 'RedHat' and not docker_testing
+
+- name: Add new limits configuration
+  copy:
+    src: limits.conf
+    dest: "/etc/security/limits.d/limits.conf"
+    owner: root
+    group: root
+  when: ansible_os_family == 'RedHat'
+
+- name: Add new sysctl tune configuration
+  copy:
+    src: tune-sysctl.conf
+    dest: "/etc/sysctl.d/01-tune.conf"
+    owner: root
+    group: root
+  when: ansible_os_family == 'RedHat'
