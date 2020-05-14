@@ -1,6 +1,6 @@
 FROM docker.io/centos:latest
 
-RUN dnf update -y && dnf install znc -y
+RUN dnf update -y && dnf install znc znc-modtcl znc-modpython -y
 
 RUN dnf clean all
 
