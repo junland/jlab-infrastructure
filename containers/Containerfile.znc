@@ -1,6 +1,8 @@
 FROM docker.io/centos:latest
 
-RUN dnf update -y && dnf install znc znc-modtcl znc-modpython -y
+RUN dnf update -y && dnf install epel-release -y && dnf update -y
+
+RUN dnf install znc znc-modtcl znc-modpython -y
 
 RUN dnf clean all
 
