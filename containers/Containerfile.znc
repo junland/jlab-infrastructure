@@ -1,0 +1,13 @@
+FROM docker.io/centos:latest
+
+RUN dnf update -y && dnf install znc -y
+
+RUN dnf clean all
+
+RUN mkdir -p /znc
+
+EXPOSE 6697
+
+USER znc
+
+CMD ["znc", "--foreground", "--datadir", "/znc"]
