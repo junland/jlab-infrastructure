@@ -28,4 +28,4 @@ EXPOSE 80
 
 VOLUME ["/var/lib/drone"]
 
-ENTRYPOINT ["/usr/local/bin/droned"]
+ENTRYPOINT ["/usr/sbin/droned"]
