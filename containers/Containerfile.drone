@@ -2,7 +2,7 @@ FROM docker.io/centos:latest
 
 RUN dnf update -y && dnf install epel-release -y && dnf update -y
 
-RUN dnf golang zip sqlite sqlite-devel git -y 1> /dev/null 2> /dev/null
+RUN dnf install golang zip sqlite sqlite-devel git -y
 
 RUN git clone https://github.com/drone/drone.git /build && cd /build && git checkout v1.7.0
 
