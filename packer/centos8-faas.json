@@ -1,0 +1,64 @@
+{
+  "builders":
+  [
+    {
+      "type": "qemu",
+      "accelerator": "kvm",
+      "headless": true,
+      "qemuargs": [
+        [ "-m", "2048M" ],
+        [ "-serial", "file:serial.out" ],
+        [ "-smp", "cpus=1,maxcpus=16,cores=2" ]
+      ],
+      "disk_interface": "virtio",
+      "disk_size": 95000,
+      "format": "qcow2",
+      "net_device": "virtio-net",
+
+      "iso_url": "http://centos.mirror.lstn.net/8.1.1911/isos/x86_64/CentOS-8.1.1911-x86_64-dvd1.iso",
+      "iso_checksum": "3ee3f4ea1538e026fff763e2b284a6f20b259d91d1ad5688f5783a67d279423b",
+      "iso_checksum_type": "sha256",
+
+
+      "vm_name": "centos8-faas",
+      "output_directory": "centos8-faas-output",
+
+      "http_directory": "centos",
+      "http_port_min": 10082,
+      "http_port_max": 10089,
+
+      "ssh_host_port_min": 2222,
+      "ssh_host_port_max": 2229,
+
+      "ssh_username": "root",
+      "ssh_password": "root",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "1200s",
+
+      "boot_wait": "10s",
+      "boot_command": [
+        "<up><wait><tab><wait> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-kvm-ks.cfg<enter><wait>"
+      ],
+
+      "shutdown_command": "shutdown -P now"
+    }
+  ],
+  "provisioners":
+  [
+    {
+      "type": "shell",
+      "pause_before": "10s",
+      "inline": [
+        "dnf update -y && dnf install epel-release -y && dnf update -y",
+        "dnf install git runc -y",
+        "mkdir -p /opt/cni/bin",
+        "curl -sSL https://github.com/containerd/containerd/releases/download/v1.2.13/containerd-1.2.13.linux-amd64.tar.gz | tar -xvz --strip-components=2 -C /usr/local/bin/ && ls -la /usr/local/bin",
+        "curl -sSL https://github.com/containernetworking/plugins/releases/download/v0.8.5/cni-plugins-linux-amd64-v0.8.5.tgz | tar -xz -C /opt/cni/bin && ls -la /opt/cni/bin",
+        "curl -sSL https://github.com/openfaas/faas-cli/releases/download/0.11.8/faas-cli > /usr/local/bin/faas-cli && chmod 777 /usr/local/bin/faas-cli",
+        "curl -sSL https://github.com/openfaas/faasd/releases/download/0.8.1/faasd > /usr/local/bin/faasd && chmod 777 /usr/local/bin/faasd",
+        "dnf clean all",
+        "sed -i '/swap/s/^/#/g' /etc/fstab"
+      ]
+    }
+  ]
+}
