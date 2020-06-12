@@ -18,10 +18,21 @@
   args:
     name: nginx
     state: latest
+    
+- name: Install goaccess deps (1/2)
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: GeoIP
+    state: latest
+    
+- name: Install goaccess deps (2/2)
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: tokyocabinet
+    state: latest
 
-#- name: Install goaccess
-#  action: "{{ ansible_pkg_mgr }}"
-#  args:
-#    name: goaccess
-#    state: latest
-#  when: epel_repofile_result.stat.exists
+- name: Install goaccess
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: https://download-ib01.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/os/Packages/g/goaccess-1.3-1.fc32.x86_64.rpm
+    state: latest
