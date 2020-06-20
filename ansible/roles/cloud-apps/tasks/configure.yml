@@ -1,0 +1,41 @@
+- name: Add ZNC user
+  user:
+    name: znc
+    comment: ZNC daemon
+    system: yes
+
+- name: Create ZNC directory tree
+  file:
+    path: "/var/lib/znc"
+    state: directory
+    owner: znc
+    group: znc
+    mode: 0750
+
+- name: Deploy ZNC configuration file
+  template:
+    src: znc.conf.j2
+    dest: "/var/lib/znc/configs/znc.conf"
+    owner: znc
+    group: znc
+    mode: 0600
+
+- name: Add unit file for ZNC
+    copy:
+      src: znc-container.service
+      dest: "/usr/lib/systemd/system/znc-container.service"
+      owner: root
+      group: root
+
+- name: Enable ZNC container service
+  service:
+   name: znc-container
+   enabled: yes
+  when: not docker_testing
+
+- name: Start ZNC container service, if not started
+  service:
+    name: znc-container
+    state: started
+  when: not docker_testing
+    
