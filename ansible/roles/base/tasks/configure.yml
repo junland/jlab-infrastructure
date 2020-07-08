@@ -26,3 +26,10 @@
     owner: root
     group: root
   when: ansible_os_family == 'RedHat'
+
+  - name: Setup alternate SSH port
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^Port"
+    line: "Port {{ sshd_port }}"
+  when: ansible_os_family == 'RedHat'

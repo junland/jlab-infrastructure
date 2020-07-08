@@ -6,6 +6,8 @@ epel_repofile_path: "/etc/yum.repos.d/epel.repo"
 
 mon_ver: "0.18.1"
 
+sshd_port: "22"
+
 motd_intro: " Welcome to the jlab.space infrastructure node."
 motd_info:
     - " FQDN:    ": "{{ ansible_fqdn }}"
