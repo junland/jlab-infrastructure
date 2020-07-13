@@ -2,7 +2,7 @@ FROM docker.io/centos:latest
 
 RUN dnf update -y && dnf install epel-release -y && dnf update -y
 
-RUN dnf install -y openssl virtualenv python python-pip python-lxml python-babel uwsgi uwsgi-plugin-python3 git @development-tools libxml2 ShellCheck
+RUN dnf install -y openssl virtualenv python python-pip python-lxml python-babel uwsgi uwsgi-plugin-python3 git make libxml2 ShellCheck
 
 RUN dnf clean all
 
