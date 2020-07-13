@@ -2,19 +2,21 @@ FROM docker.io/centos:latest
 
 RUN dnf update -y && dnf install epel-release -y && dnf update -y
 
-RUN dnf install -y openssl virtualenv python python-pip python-lxml python-babel uwsgi uwsgi-plugin-python3 git make libxml2 ShellCheck
+RUN dnf install -y openssl python3-virtualenv python38 python3-pip python3-lxml python3-babel uwsgi uwsgi-plugin-python3 git make libxml2-devel
 
 RUN dnf clean all
 
-RUN mkdir /usr/local/searx && cd /usr/local/searx 
+RUN addgroup -g 977 searx && adduser -u 977 -D -h /usr/local/searx -s /bin/sh -G searx searx
 
-RUN wget -qO- https://github.com/asciimoo/searx/archive/v${VERSION}.tar.gz | tar xz --strip 1 
+RUN mkdir /usr/local/searx && cd /usr/local/searx && mkdir -p /opt/searx
 
-RUN pip3 install --upgrade setuptools
+WORKDIR /opt/searx
+
+RUN wget -qO- https://github.com/asciimoo/searx/archive/v0.17.0.tar.gz | tar xz --strip 1 
+
+RUN pip3 install --upgrade pip 
 
 RUN pip3 install --no-cache -r requirements.txt
-
-RUN pip3 install --no-cache Werkzeug==0.16.0
 
 RUN sed -i "s/127.0.0.1/0.0.0.0/g" searx/settings.yml 
 
