@@ -2,7 +2,7 @@ FROM docker.io/centos:latest
 
 RUN dnf update -y && dnf install epel-release -y && dnf update -y
 
-RUN dnf install -y openssl python3-virtualenv python38 python3-pip python3-lxml python3-babel uwsgi uwsgi-plugin-python3 git make libxml2-devel
+RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3-lxml python3-babel libffi-devel wget git make libxml2-devel platform-python-devel
 
 RUN dnf clean all
 
@@ -12,20 +12,22 @@ RUN mkdir /usr/local/searx && cd /usr/local/searx && mkdir -p /opt/searx
 
 WORKDIR /opt/searx
 
-RUN wget -qO- https://github.com/asciimoo/searx/archive/v0.17.0.tar.gz | tar xz --strip 1 
+RUN wget -qO- https://github.com/asciimoo/searx/archive/v0.17.0.tar.gz | tar xz --strip 1
 
 RUN pip3 install --upgrade pip 
 
 RUN pip3 install --no-cache -r requirements.txt
 
-RUN sed -i "s/127.0.0.1/0.0.0.0/g" searx/settings.yml 
+COPY files/start-searx.sh /usr/local/bin/start-searx.sh
 
-COPY files/run.sh /usr/local/bin/run.sh
+COPY files/settings-searx.yml /opt/searx/searx/settings.yml 
 
-RUN chmod +x /usr/local/bin/run.sh
+RUN chmod +x /usr/local/bin/start-searx.sh.sh
 
-RUN cd /usr/local/bin && wget https://raw.githubusercontent.com/junland/jlab-infrastructure/master/containers/files/start-searx.sh && chmod +x start-searx.sh
+RUN chown searx:searx -R /opt/searx/*
 
 EXPOSE 8888
+
+USER searx
 
 CMD ["start-searx.sh"]
