@@ -1,0 +1,4 @@
+---
+# defaults file for this role
+znc_user_nick: my-user
+znc_user_realname: my-realuser
