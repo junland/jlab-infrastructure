@@ -27,7 +27,7 @@
     group: root
   when: ansible_os_family == 'RedHat'
 
-  - name: Setup alternate SSH port
+- name: Setup alternate SSH port
   lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: "^Port"
