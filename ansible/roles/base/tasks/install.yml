@@ -65,9 +65,9 @@
     dest: /tmp/node_exporter-{{ mon_ver }}.linux-amd64.tar.gz
 
 - name: Wait until the file node_exporter is downloaded before continuing
-    wait_for:
-      delay: 15
-      path: /tmp/node_exporter-{{ mon_ver }}.linux-amd64.tar.gz
+  wait_for:
+    delay: 15
+    path: /tmp/node_exporter-{{ mon_ver }}.linux-amd64.tar.gz
 
 - name: Extract monitoring package (Prometheus Node Exporter)
   unarchive:
