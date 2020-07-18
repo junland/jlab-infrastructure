@@ -52,13 +52,25 @@
     owner: root
     group: root
 
-- name: Enable nginx service
+- name: Add unit file for Nginx
+  copy:
+    src: nginx.service
+    dest: "/usr/lib/systemd/system/nginx.service"
+    owner: root
+    group: root
+    force: yes
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Enable Nginx service
   service:
     name: nginx
     enabled: yes
   when: not docker_testing
 
-- name: Start nginx service, if not started
+- name: Start Nginx service, if not started
   service:
     name: nginx
     state: started

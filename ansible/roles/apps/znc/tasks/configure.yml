@@ -21,11 +21,15 @@
     mode: 0600
 
 - name: Add unit file for ZNC
-    copy:
-      src: znc-container.service
-      dest: "/usr/lib/systemd/system/znc-container.service"
-      owner: root
-      group: root
+  copy:
+    src: znc-container.service
+    dest: "/usr/lib/systemd/system/znc-container.service"
+    owner: root
+    group: root
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
 
 - name: Enable ZNC container service
   service:

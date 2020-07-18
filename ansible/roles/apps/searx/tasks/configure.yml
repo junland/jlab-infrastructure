@@ -5,11 +5,15 @@
     system: yes
 
 - name: Add unit file for Searx
-    copy:
-      src: searx-container.service
-      dest: "/usr/lib/systemd/system/searx-container.service"
-      owner: root
-      group: root
+  copy:
+    src: searx-container.service
+    dest: "/usr/lib/systemd/system/searx-container.service"
+    owner: root
+    group: root
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
 
 - name: Enable Searx container service
   service:
