@@ -77,8 +77,6 @@
     exclude:
      - LICENSE
      - NOTICE
-    
 
 - name: Install monitoring package (Prometheus Node Exporter)
   command: mv /tmp/node_exporter-{{ mon_ver }}.linux-amd64/node_exporter /usr/local/bin
-
