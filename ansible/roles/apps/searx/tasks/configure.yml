@@ -1,0 +1,25 @@
+- name: Add Searx user
+  user:
+    name: searx
+    comment: Searx daemon
+    system: yes
+
+- name: Add unit file for Searx
+    copy:
+      src: searx-container.service
+      dest: "/usr/lib/systemd/system/searx-container.service"
+      owner: root
+      group: root
+
+- name: Enable Searx container service
+  service:
+   name: searx-container
+   enabled: yes
+  when: not docker_testing
+
+- name: Start Searx container service, if not started
+  service:
+    name: searx-container
+    state: started
+  when: not docker_testing
+    

@@ -1,0 +1,8 @@
+- name: Install podman
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: podman
+    state: latest
+
+- name: Get Searx image from autobuilder
+  command: podman pull docker.io/junland/jlab-searx

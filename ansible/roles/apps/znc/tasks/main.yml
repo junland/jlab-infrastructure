@@ -1,0 +1,22 @@
+---
+# tasks file for base role
+
+- name: Assert supported distributions and versions for base role
+    assert:
+    that:
+        - ( ansible_distribution == "RedHat" and ( ansible_distribution_major_version >= '8' )
+        ) or
+        ( ansible_distribution == "CentOS" and ( ansible_distribution_major_version >= '8' )
+        ) or
+        ( ansible_distribution == "Fedora" and ( ansible_distribution_major_version >= '30' )
+        ) 
+
+- name: Update and upgrade system
+    action: "{{ ansible_pkg_mgr }}"
+    args:
+    update_only: yes
+    update_cache: yes
+    when: epel_repofile_result.stat.exists
+
+- include: install.yml
+- include: configure.yml
