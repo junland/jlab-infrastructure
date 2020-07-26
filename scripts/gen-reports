@@ -1,0 +1,32 @@
+#!/bin/bash
+
+msg() {
+  echo " >>> $1"
+}
+
+LOG_DIR=/var/log/nginx
+EXEC_DATE=$(date +"%m%d%Y_%H%M%S")
+LOG_FILES=($(ls ${LOG_DIR}/*.access.log))
+
+msg "Creating report dir..."
+
+mkdir -p $LOG_DIR/reports
+
+msg "Creating reports..."
+
+for log_file in ${LOG_FILES[@]}; do
+    msg "Creating report for $log_file..."
+    goaccess $LOG_DIR/$log_file -o $LOG_DIR/reports/report-${log_file%.*}-$EXEC_DATE.html
+done
+
+cd $LOG_DIR/reports
+
+tar -cJvf $LOG_DIR/reports/reports-$EXEC_DATE.tar.gz *.html
+
+msg "Cleaning..."
+
+rm -rvf $LOG_DIR/reports/*.html
+
+msg "Done!"
+
+exit 0

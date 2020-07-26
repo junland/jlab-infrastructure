@@ -1,4 +1,3 @@
 ---
 # defaults file for this role
-znc_user_nick: my-user
-znc_user_realname: my-realuser
+znc_config_pkg_file: junlands_znc_config.tar.gz

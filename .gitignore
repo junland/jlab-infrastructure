@@ -32,3 +32,6 @@ override.tf.json
 **/packages/**/*.rpm
 **/packages/**/*.deb
 **/packages/**/*.ipkg
+
+# ansbile.
+ansible/roles/apps/znc/files/*.tar.*

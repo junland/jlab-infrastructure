@@ -5,7 +5,8 @@ This directory contains configurations using `Ansible`
 ## Roles
 
 `base` - Common base configuration role.
-`load-balancer` - Load balancer role to route various network services.
+`gateway` - Gateway role to route various network services.
+`apps` - Various applications that I like to run.
 
 ## How to use.
 

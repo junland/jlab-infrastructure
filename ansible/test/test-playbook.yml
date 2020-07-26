@@ -5,6 +5,6 @@
   connection: local
   roles:
     - base
-    - load-balancer
+    - gateway
 
   

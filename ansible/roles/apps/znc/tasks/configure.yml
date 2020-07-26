@@ -12,6 +12,11 @@
     group: znc
     mode: 0750
 
+- name: Extract config {{ znc_config_pkg_file }} into /var/lib/znc
+  unarchive:
+    src: {{ znc_config_pkg_file }}
+    dest: /var/lib/znc
+
 - name: Deploy ZNC configuration file
   template:
     src: znc.conf.j2
