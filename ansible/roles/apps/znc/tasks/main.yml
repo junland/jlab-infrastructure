@@ -14,6 +14,7 @@
   args:
     update_only: yes
     update_cache: yes
+    when: epel_repofile_result.stat.exists and docker_repofile_result.stat.exists
 
 - include: install.yml
 - include: configure.yml
