@@ -6,7 +6,7 @@ RUN dnf install znc znc-modtcl znc-modpython -y
 
 RUN dnf clean all
 
-RUN groupadd -g 960 znc && useradd -u 960 -D -h /znc -s /bin/sh -G znc znc
+RUN groupadd -g 960 znc && useradd -u 960 -D -h /usr/local/znc -s /bin/sh -G znc znc
 
 RUN mkdir -p /znc
 
