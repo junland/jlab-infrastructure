@@ -8,9 +8,9 @@ RUN dnf clean all
 
 RUN mkdir -p /usr/local/searx && mkdir -p /opt/searx
 
-RUN groupadd -g 977 searx
+RUN groupadd searx
 
-RUN useradd -u 977 -d /usr/local/searx -s /bin/sh -g -U searx
+RUN useradd -u 977 -d /usr/local/searx -s /bin/sh searx && usermod -a -G searx searx
 
 WORKDIR /opt/searx
 
