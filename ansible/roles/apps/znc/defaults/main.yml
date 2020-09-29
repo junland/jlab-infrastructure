@@ -1,3 +1,4 @@
 ---
 # defaults file for this role
+container_engine: docker
 znc_config_pkg_file: junlands_znc_config.tar.gz

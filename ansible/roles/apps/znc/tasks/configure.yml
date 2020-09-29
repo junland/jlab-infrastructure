@@ -25,9 +25,9 @@
     group: znc
     mode: 0600
 
-- name: Add unit file for ZNC
+- name: Add unit file for ZNC (Docker)
   copy:
-    src: znc-container.service
+    src: znc-container-docker.service
     dest: "/usr/lib/systemd/system/znc-container.service"
     owner: root
     group: root

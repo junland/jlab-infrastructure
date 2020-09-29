@@ -1,0 +1,3 @@
+---
+# defaults file for this role
+container_engine: docker

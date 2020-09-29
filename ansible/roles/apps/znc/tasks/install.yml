@@ -1,8 +1,8 @@
-- name: Install podman
+- name: Install docker engine
   action: "{{ ansible_pkg_mgr }}"
   args:
-    name: podman
+    name: docker-ce
     state: latest
 
-- name: Get ZNC image from autobuilder
-  command: podman pull docker.io/junland/jlab-znc
+- name: Get ZNC image from autobuilder (Docker)
+  command: docker pull docker.io/junland/jlab-znc

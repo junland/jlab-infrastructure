@@ -3,7 +3,13 @@
   stat:
     path: "{{ epel_repofile_path }}"
   register: epel_repofile_result
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'CentOS'
+
+- name: Check if Docker repo is already configured
+  stat:
+    path: "{{ docker_repofile_path }}"
+  register: docker_repofile_result
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'CentOS'
 
 - name: Install EPEL repo
   action: "{{ ansible_pkg_mgr }}"
@@ -14,14 +20,25 @@
   until: result is succeeded
   retries: 5
   delay: 10
-  when: not epel_repofile_result.stat.exists and ansible_os_family == 'RedHat'
+  when: not epel_repofile_result.stat.exists and ansible_os_family == 'RedHat' or ansible_os_family == 'CentOS'
   
 - name: Import EPEL GPG key
   rpm_key:
     key: "{{ epel_repo_gpg_key_url }}"
     state: present
   ignore_errors: "{{ ansible_check_mode }}"
-  when: not epel_repofile_result.stat.exists and ansible_os_family == 'RedHat'
+  when: not epel_repofile_result.stat.exists and ansible_os_family == 'RedHat' or ansible_os_family == 'CentOS'
+
+- name: Install Docker repo
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: "{{ docker_repo_url }}"
+    state: present
+  register: result
+  until: result is succeeded
+  retries: 5
+  delay: 10
+  when: not docker_repofile_result.stat.exists and ansible_os_family == 'RedHat' or ansible_os_family == 'CentOS'
 
 - name: Install git
   action: "{{ ansible_pkg_mgr }}"

@@ -4,9 +4,9 @@
     comment: Searx daemon
     system: yes
 
-- name: Add unit file for Searx
+- name: Add unit file for Searx (Docker)
   copy:
-    src: searx-container.service
+    src: searx-container-docker.service
     dest: "/usr/lib/systemd/system/searx-container.service"
     owner: root
     group: root
