@@ -1,0 +1,15 @@
+[Unit]
+Description=Searx search container (Docker)
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run --rm --cidfile="/var/run/%n.cid" -p 8888:8888 --name %n jlab-znc 
+PIDFile=/var/run/%n.pid
+
+[Install]
+WantedBy=multi-user.target

@@ -1,5 +1,5 @@
 [Unit]
-Description=ZNC IRC bouncer container
+Description=ZNC IRC bouncer container (Podman)
 
 [Service]
 Restart=on-failure

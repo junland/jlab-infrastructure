@@ -1,5 +1,5 @@
 [Unit]
-Description=Searx search container
+Description=Searx search container (Podman)
 
 [Service]
 Restart=on-failure
