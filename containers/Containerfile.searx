@@ -6,11 +6,11 @@ RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3
 
 RUN dnf clean all
 
-RUN groupadd -g 977 searx && 
+RUN mkdir -p /usr/local/searx && mkdir -p /opt/searx
+
+RUN groupadd -g 977 searx
 
 RUN useradd -u 977 -D -h /usr/local/searx -s /bin/sh -G searx searx
-
-RUN mkdir /usr/local/searx && cd /usr/local/searx && mkdir -p /opt/searx
 
 WORKDIR /opt/searx
 
