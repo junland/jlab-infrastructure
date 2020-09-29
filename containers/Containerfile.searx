@@ -10,7 +10,7 @@ RUN mkdir -p /usr/local/searx && mkdir -p /opt/searx
 
 RUN groupadd -g 977 searx
 
-RUN useradd -u 977 -D -d /usr/local/searx -s /bin/sh -G searx searx
+RUN useradd -u 977 -d /usr/local/searx -s /bin/sh -U searx
 
 WORKDIR /opt/searx
 
