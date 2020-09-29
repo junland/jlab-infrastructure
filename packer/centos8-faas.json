@@ -50,7 +50,7 @@
       "pause_before": "10s",
       "inline": [
         "dnf update -y && dnf install epel-release -y && dnf update -y",
-        "dnf install git runc -y",
+        "dnf install git runc htop nmon -y",
         "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y",
         "dnf install -y containerd",
         "mkdir -p /opt/cni/bin",

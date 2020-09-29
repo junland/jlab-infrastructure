@@ -52,6 +52,7 @@
       "inline": [
         "echo '%wheel        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers",
         "dnf update -y && dnf install epel-release -y && dnf update -y",
+        "dnf install htop nmon",
         "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y",
         "dnf install -y docker-ce docker-ce-cli",
         "systemctl enable docker && systemctl start docker",
