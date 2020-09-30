@@ -1,12 +1,12 @@
 FROM docker.io/centos:latest
 
+ENV CENTOS_PKG_UWSGI_URL=https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64
+
 RUN dnf update -y && dnf install epel-release -y && dnf update -y
 
 RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3-lxml python3-babel libffi-devel wget git make libxml2-devel platform-python-devel
 
-RUN dnf install -y https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-2.0.18-4.el8.x86_64.rpm
-
-RUN dnf install -y https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-plugin-common-2.0.18-4.el8.x86_64.rpm https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-plugin-python3-2.0.18-4.el8.x86_64.rpm
+RUN dnf install -y ${CENTOS_PKG_UWSGI_URL}/uwsgi-2.0.18-4.el8.x86_64.rpm ${CENTOS_PKG_UWSGI_URL}/uwsgi-plugin-common-2.0.18-4.el8.x86_64.rpm ${CENTOS_PKG_UWSGI_URL}/uwsgi-plugin-python3-2.0.18-4.el8.x86_64.rpm
 
 RUN dnf clean all
 
