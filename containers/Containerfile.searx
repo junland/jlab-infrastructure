@@ -4,6 +4,10 @@ RUN dnf update -y && dnf install epel-release -y && dnf update -y
 
 RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3-lxml python3-babel libffi-devel wget git make libxml2-devel platform-python-devel
 
+RUN dnf install -y https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-2.0.18-4.el8.x86_64.rpm
+
+RUN dnf install -y https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-plugin-python3-2.0.18-4.el8.x86_64.rpm
+
 RUN dnf clean all
 
 RUN mkdir -p /opt/searx
@@ -22,7 +26,9 @@ RUN pip3 install --no-cache -r requirements.txt
 
 COPY containers/files/start-searx.sh /usr/local/bin/start-searx.sh
 
-COPY containers/files/settings-searx.yml /opt/searx/searx/settings.yml 
+COPY containers/files/settings-searx.yml /opt/searx/searx/settings.yml
+
+COPY containers/files/uwsgi-searx.ini /etc/uwsgi.d/searx.ini 
 
 RUN chmod +x /usr/local/bin/start-searx.sh
 
