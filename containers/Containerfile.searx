@@ -6,7 +6,7 @@ RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3
 
 RUN dnf install -y https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-2.0.18-4.el8.x86_64.rpm
 
-RUN dnf install -y https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-plugin-python3-2.0.18-4.el8.x86_64.rpm
+RUN dnf install -y https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-plugin-common-2.0.18-4.el8.x86_64.rpm https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/4.el8/x86_64/uwsgi-plugin-python3-2.0.18-4.el8.x86_64.rpm
 
 RUN dnf clean all
 
