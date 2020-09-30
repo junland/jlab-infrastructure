@@ -6,7 +6,7 @@ RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3
 
 RUN dnf clean all
 
-RUN mkdir -p /usr/local/searx && mkdir -p /opt/searx
+RUN mkdir -p /opt/searx
 
 RUN groupadd searx
 
@@ -20,11 +20,11 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install --no-cache -r requirements.txt
 
-COPY files/start-searx.sh /usr/local/bin/start-searx.sh
+COPY containers/files/start-searx.sh /usr/local/bin/start-searx.sh
 
-COPY files/settings-searx.yml /opt/searx/searx/settings.yml 
+COPY containers/files/settings-searx.yml /opt/searx/searx/settings.yml 
 
-RUN chmod +x /usr/local/bin/start-searx.sh.sh
+RUN chmod +x /usr/local/bin/start-searx.sh
 
 RUN chown searx:searx -R /opt/searx/*
 
