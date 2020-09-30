@@ -4,7 +4,7 @@ Description=Searx search container (Podman)
 [Service]
 Restart=on-failure
 ExecStartPre=/usr/bin/rm -f /var/run/%n.pid /var/run/%n.cid
-ExecStart=/usr/bin/podman run --conmon-pidfile  /var/run/%n.pid  --cidfile /var/run/%n.cid -p 6697:6697 --mount type=bind,source=/var/lib/znc,destination=/znc -d jlab-searx 
+ExecStart=/usr/bin/podman run --conmon-pidfile  /var/run/%n.pid  --cidfile /var/run/%n.cid -p 6697:6697 --mount type=bind,source=/var/lib/znc,destination=/znc -d docker.io/junland/jlab-znc
 ExecStop=/usr/bin/sh -c "/usr/bin/podman rm -f `cat /var/run/%n.cid"
 KillMode=none
 Type=forking
