@@ -20,7 +20,7 @@ WORKDIR /opt/searx
 
 RUN wget -qO- https://github.com/asciimoo/searx/archive/v0.17.0.tar.gz | tar xz --strip 1
 
-RUN pip3 install --upgrade pip 
+RUN pip3 install --upgrade pip && pip3 install --upgrade setuptools && pip3 install --upgrade wheel
 
 RUN pip3 install --no-cache -r requirements.txt
 
