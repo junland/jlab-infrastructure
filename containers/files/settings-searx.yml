@@ -31,6 +31,14 @@ outgoing: # communication with search engines
     pool_connections : 100 # Number of different hosts
     pool_maxsize : 10 # Number of simultaneous requests by host
 
+doi_resolvers :
+  oadoi.org : 'https://oadoi.org/'
+  doi.org : 'https://doi.org/'
+  doai.io  : 'https://dissem.in/'
+  sci-hub.tw : 'https://sci-hub.tw/'
+
+default_doi_resolver : 'sci-hub.tw'
+
 locales:
     en : English
     es : Español (Spanish)
