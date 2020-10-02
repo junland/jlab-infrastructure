@@ -4,7 +4,7 @@ ENV CENTOS_PKG_UWSGI_URL=https://cbs.centos.org/kojifiles/packages/uwsgi/2.0.18/
 
 RUN dnf update -y && dnf install epel-release -y && dnf update -y
 
-RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3-lxml python3-babel libffi-devel wget git make libxml2-devel platform-python-devel
+RUN dnf install -y openssl-devel python3-virtualenv python38 python3-pip python3-lxml python3-babel libffi-devel wget git make brotli libxml2-devel platform-python-devel
 
 RUN dnf install -y ${CENTOS_PKG_UWSGI_URL}/uwsgi-2.0.18-4.el8.x86_64.rpm ${CENTOS_PKG_UWSGI_URL}/uwsgi-plugin-common-2.0.18-4.el8.x86_64.rpm ${CENTOS_PKG_UWSGI_URL}/uwsgi-plugin-python3-2.0.18-4.el8.x86_64.rpm
 
@@ -12,9 +12,7 @@ RUN dnf clean all
 
 RUN mkdir -p /opt/searx
 
-RUN groupadd searx
-
-RUN useradd -g searx -u 977 -d /usr/local/searx -s /bin/sh searx
+RUN groupadd searx && useradd -g searx -u 977 -d /usr/local/searx -s /bin/sh searx
 
 WORKDIR /opt/searx
 
@@ -30,9 +28,9 @@ COPY containers/files/settings-searx.yml /opt/searx/searx/settings.yml
 
 COPY containers/files/uwsgi-searx.ini /etc/uwsgi.d/searx.ini 
 
-RUN chmod +x /usr/local/bin/start-searx.sh
+RUN chmod +x /usr/local/bin/start-searx.sh && chown searx:searx -R /opt/searx/*
 
-RUN chown searx:searx -R /opt/searx/*
+RUN su searx -c "/usr/bin/python3 -m compileall -q searx";
 
 EXPOSE 8888
 
