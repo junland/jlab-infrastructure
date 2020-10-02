@@ -10,13 +10,15 @@ RUN dnf install -y ${CENTOS_PKG_UWSGI_URL}/uwsgi-2.0.18-4.el8.x86_64.rpm ${CENTO
 
 RUN dnf clean all
 
-RUN mkdir -p /opt/searx
-
 RUN groupadd searx && useradd -g searx -u 977 -d /usr/local/searx -s /bin/sh searx
 
-WORKDIR /opt/searx
+# Uncomment below for a more stable release.
+# RUN mkdir -p /opt/searx && wget -qO- https://github.com/asciimoo/searx/archive/v0.17.0.tar.gz | tar xz --strip 1
 
-RUN wget -qO- https://github.com/asciimoo/searx/archive/v0.17.0.tar.gz | tar xz --strip 1
+# Get latest edge release.
+RUN cd /opt && git clone https://github.com/searx/searx
+
+WORKDIR /opt/searx
 
 RUN pip3 install --upgrade pip && pip3 install --upgrade setuptools && pip3 install --upgrade wheel
 
@@ -30,7 +32,7 @@ COPY containers/files/uwsgi-searx.ini /etc/uwsgi.d/searx.ini
 
 RUN chmod +x /usr/local/bin/start-searx.sh && chown searx:searx -R /opt/searx/*
 
-RUN su searx -c "/usr/bin/python3 -m compileall -q searx";
+RUN su searx -c "/usr/bin/python3 -m compileall -q searx"
 
 EXPOSE 8888
 
