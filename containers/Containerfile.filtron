@@ -1,0 +1,23 @@
+FROM docker.io/centos:latest AS build
+
+RUN dnf update -y && dnf install epel-release -y && dnf update -y
+
+RUN dnf install -y git openssl-devel golang
+
+RUN dnf clean all
+
+RUN go get -v -u github.com/asciimoo/filtron
+
+RUN strip /root/go/bin/*
+
+FROM docker.io/centos:latest
+
+COPY --from=build /root/go/bin/filtron /usr/local/bin/filtron
+
+RUN mkdir -p /etc/filtron
+
+COPY containers/files/rules-filtron.json /etc/filtron/rules.json
+
+EXPOSE 4004 4005 
+
+CMD filtron -rules /etc/filtron/rules.json -listen '127.0.0.1:4004' -api '127.0.0.1:4005' -target '127.0.0.1:8888'

@@ -1,0 +1,19 @@
+FROM docker.io/centos:latest AS build
+
+RUN dnf update -y && dnf install epel-release -y && dnf update -y
+
+RUN dnf install -y git openssl-devel golang
+
+RUN dnf clean all
+
+RUN go get -v -u github.com/asciimoo/morty
+
+RUN strip /root/go/bin/*
+
+FROM docker.io/centos:latest
+
+COPY --from=build /root/go/bin/morty /usr/local/bin/morty
+
+EXPOSE 3000
+
+CMD morty -key '' -listen '127.0.0.1:3000' -timeout 5
