@@ -14,6 +14,8 @@ FROM docker.io/centos:latest
 
 COPY --from=build /root/go/bin/filtron /usr/local/bin/filtron
 
+RUN dnf update -y
+
 RUN mkdir -p /etc/filtron
 
 COPY containers/files/rules-filtron.json /etc/filtron/rules.json
