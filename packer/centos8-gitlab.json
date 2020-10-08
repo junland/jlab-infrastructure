@@ -15,8 +15,8 @@
       "http_directory": "centos",
       "http_port_max": 10089,
       "http_port_min": 10082,
-      "iso_checksum": "sha256:3ee3f4ea1538e026fff763e2b284a6f20b259d91d1ad5688f5783a67d279423b",
-      "iso_url": "http://centos.mirror.lstn.net/8.1.1911/isos/x86_64/CentOS-8.1.1911-x86_64-dvd1.iso",
+      "iso_checksum": "sha256:47ab14778c823acae2ee6d365d76a9aed3f95bb8d0add23a06536b58bb5293c0",
+      "iso_url": "http://repos.dfw.quadranet.com/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-minimal.iso",
       "net_device": "virtio-net",
       "output_directory": "centos8-output",
       "qemuargs": [
