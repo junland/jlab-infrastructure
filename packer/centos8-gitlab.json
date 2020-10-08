@@ -36,7 +36,7 @@
       "shutdown_command": "shutdown -P now",
       "ssh_password": "root",
       "ssh_port": 22,
-      "ssh_timeout": "1200s",
+      "ssh_timeout": "2400s",
       "ssh_username": "root",
       "type": "qemu",
       "vm_name": "centos8-gitlab"
