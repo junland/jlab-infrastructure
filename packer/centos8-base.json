@@ -21,7 +21,7 @@
 
 
       "vm_name": "centos8-base",
-      "output_directory": "centos8-base-output",
+      "output_directory": "centos8-output",
 
       "http_directory": "centos",
       "http_port_min": 10082,
