@@ -35,3 +35,8 @@ override.tf.json
 
 # ansbile.
 ansible/roles/apps/znc/files/*.tar.*
+
+# packer
+packer/packer_cache/
+packer/centos*-output/
+packer/serial.out
