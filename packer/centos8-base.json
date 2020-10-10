@@ -45,12 +45,11 @@
   "provisioners": [
     {
       "inline": [
-        "echo 'deltarpm=1' >> /etc/dnf/dnf.conf",
-        "dnf update -y",
-        "dnf install htop nmon",
-        "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y \u0026\u0026 dnf update -y",
+        "dnf install -y epel-release && dnf update -y",
+        "dnf install -y wget htop nmon",
+        "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y",
         "dnf install -y docker-ce docker-ce-cli",
-        "systemctl enable docker \u0026\u0026 systemctl start docker",
+        "systemctl enable docker && systemctl start docker",
         "groupadd docker || true",
         "dnf clean all",
         "sed -i '/swap/s/^/#/g' /etc/fstab"

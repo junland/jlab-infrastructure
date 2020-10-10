@@ -45,15 +45,14 @@
   "provisioners": [
     {
       "inline": [
-        "echo 'deltarpm=1 >> /etc/dnf/dnf.conf",
-        "dnf update -y",
-        "dnf install git runc htop nmon -y",
-        "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y \u0026\u0026 dnf update -y",
+        "dnf install -y epel-release && dnf update -y",
+        "dnf install -y wget git runc htop nmon",
+        "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y",
         "dnf install -y containerd",
         "mkdir -p /opt/cni/bin",
-        "curl -sSL https://github.com/containernetworking/plugins/releases/download/v0.8.7/cni-plugins-linux-amd64-v0.8.7.tgz | tar -xz -C /opt/cni/bin \u0026\u0026 ls -la /opt/cni/bin",
-        "curl -sSL https://github.com/openfaas/faas-cli/releases/download/0.12.13/faas-cli > /usr/local/bin/faas-cli \u0026\u0026 chmod 777 /usr/local/bin/faas-cli",
-        "curl -sSL https://github.com/openfaas/faasd/releases/download/0.9.5/faasd > /usr/local/bin/faasd \u0026\u0026 chmod 777 /usr/local/bin/faasd",
+        "curl -sSL https://github.com/containernetworking/plugins/releases/download/v0.8.7/cni-plugins-linux-amd64-v0.8.7.tgz | tar -xz -C /opt/cni/bin && ls -la /opt/cni/bin",
+        "curl -sSL https://github.com/openfaas/faas-cli/releases/download/0.12.13/faas-cli > /usr/local/bin/faas-cli && chmod 777 /usr/local/bin/faas-cli",
+        "curl -sSL https://github.com/openfaas/faasd/releases/download/0.9.5/faasd > /usr/local/bin/faasd && chmod 777 /usr/local/bin/faasd",
         "dnf clean all",
         "sed -i '/swap/s/^/#/g' /etc/fstab"
       ],
