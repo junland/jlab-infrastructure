@@ -62,7 +62,8 @@
       ],
       "pause_before": "10s",
       "inline": [
-        "dnf clean all -y"
+        "dnf clean all -y",
+        "dnf remove -y --oldinstallonly --setopt installonly_limit=2 kernel || true"
       ],
       "type": "shell"
     }

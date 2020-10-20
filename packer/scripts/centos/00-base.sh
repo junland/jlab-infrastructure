@@ -65,6 +65,12 @@ msg "Installing sshd config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/sshd.conf > /etc/ssh/sshd_conf
 
+msg "Installing issue file..."
+
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/issue > /etc/issue
+
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/issue.net > /etc/issue.net
+
 msg "Installing Prometheus Node Exporter..."
 
 cd /tmp && wget https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VER}/node_exporter-${NODE_EXPORTER_VER}.linux-amd64.tar.gz
