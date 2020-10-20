@@ -31,10 +31,6 @@ msg "Update system..."
 
 dnf update -y
 
-msg "Removing older kernels..."
-
-dnf remove -y --oldinstallonly --setopt installonly_limit=2 kernel
-
 msg "Installing epel-release..."
 
 dnf install -y epel-release && dnf update -y
