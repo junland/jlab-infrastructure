@@ -31,7 +31,7 @@ msg "Update system..."
 
 dnf update -y
 
-msg "Remvoeing older kernels..."
+msg "Removing older kernels..."
 
 dnf remove -y --oldinstallonly --setopt installonly_limit=2 kernel
 
