@@ -77,7 +77,7 @@ chown root:root /usr/local/bin/node_exporter
 
 rm -rf /tmp/*node_exporter*
 
-msg "Disable swap..."
+msg "Disabling swap..."
 
 sed -i '/swap/d' /etc/fstab
 
