@@ -2,6 +2,10 @@
 
 set -e
 
+FAAS_CLI_VER=0.12.14
+FAAS_D_VER=0.9.5
+CNI_PLUGIN_VER=0.8.7
+
 msg() {
   printf " --------------\n"
   printf ' >>>> %s\n' "$@"
@@ -33,13 +37,13 @@ msg "Installing FaaS project..."
 
 "mkdir -p /opt/cni/bin",
 
-curl -sSL https://github.com/containernetworking/plugins/releases/download/v0.8.7/cni-plugins-linux-amd64-v0.8.7.tgz | tar -xz -C /opt/cni/bin && ls -la /opt/cni/bin
+curl -sSL https://github.com/containernetworking/plugins/releases/download/v${CNI_PLUGIN_VER}/cni-plugins-linux-amd64-v${CNI_PLUGIN_VER}.tgz | tar -xz -C /opt/cni/bin && ls -la /opt/cni/bin
 
-curl -sSL https://github.com/openfaas/faas-cli/releases/download/0.12.13/faas-cli > /usr/local/bin/faas-cli 
+curl -sSL https://github.com/openfaas/faas-cli/releases/download/${FAAS_CLI_VER}/faas-cli > /usr/local/bin/faas-cli 
 
 chmod 777 /usr/local/bin/faas-cli
 
-curl -sSL https://github.com/openfaas/faasd/releases/download/0.9.5/faasd > /usr/local/bin/faasd 
+curl -sSL https://github.com/openfaas/faasd/releases/download/${FAAS_D_VER}/faasd > /usr/local/bin/faasd 
 
 chmod 777 /usr/local/bin/faasd
 

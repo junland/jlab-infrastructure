@@ -2,7 +2,7 @@
 
 set -e
 
-NODE_EXPORTER_VER=0.18.1
+NODE_EXPORTER_VER=1.0.0
 
 msg() {
   printf " --------------\n"
