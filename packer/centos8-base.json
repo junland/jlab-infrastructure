@@ -39,7 +39,7 @@
       "ssh_port": 22,
       "ssh_timeout": "2400s",
       "type": "qemu",
-      "vm_name": "centos8-gitlab"
+      "vm_name": "centos8-base"
     }
   ],
   "provisioners": [
