@@ -37,3 +37,26 @@ If you need to debug the build, issue this command.
 ```
 PACKER_LOG=1 packer build <json config file>
 ```
+
+## Note
+
+To add upload capability, add the below code.
+
+```
+{
+      "environment_vars": [
+        "SSH_USERNAME={{user `ssh_username`}}",
+        "SSH_PASSWORD={{user `ssh_password`}}",
+      ],
+      "pause_before": "10s",
+      "inline": [
+        "mkdir -p /home/{{ user `ssh_username` }}/packer-upload"
+      ],
+      "type": "shell"
+    },
+    {
+      "type": "file",
+      "source": "./packer-upload/",
+      "destination": "/packer-upload"
+    },
+```

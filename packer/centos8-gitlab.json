@@ -7,12 +7,12 @@
       ],
       "boot_wait": "10s",
       "disk_interface": "virtio",
-      "disk_size": "100000M",
+      "disk_size": "{{ user `disk_size` }}",
       "format": "qcow2",
       "headless": true,
       "host_port_max": 2229,
       "host_port_min": 2222,
-      "http_directory": "centos",
+      "http_directory": "http/centos",
       "http_port_max": 10089,
       "http_port_min": 10082,
       "iso_checksum": "sha256:47ab14778c823acae2ee6d365d76a9aed3f95bb8d0add23a06536b58bb5293c0",
@@ -22,7 +22,7 @@
       "qemuargs": [
         [
           "-m",
-          "2048M"
+          "{{ user `memory` }}"
         ],
         [
           "-serial",
@@ -30,38 +30,50 @@
         ],
         [
           "-smp",
-          "cpus=1,maxcpus=16,cores=2"
+          "cpus={{ user `cpus` }}"
         ]
       ],
       "shutdown_command": "shutdown -P now",
-      "ssh_password": "root",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ssh_password": "{{user `ssh_password`}}",
       "ssh_port": 22,
       "ssh_timeout": "2400s",
-      "ssh_username": "root",
       "type": "qemu",
       "vm_name": "centos8-gitlab"
     }
   ],
   "provisioners": [
+    
     {
-      "inline": [
-        "dnf install -y epel-release && dnf update -y",
-        "dnf install -y wget git runc htop nmon",
-        "echo '%wheel        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers",
-        "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y",
-        "dnf install -y docker-ce docker-ce-cli",
-        "systemctl enable docker && systemctl start docker",
-        "curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh > /tmp/script.rpm.sh",
-        "chmod +x /tmp/script.rpm.sh && os=el dist=7 /tmp/script.rpm.sh",
-        "dnf update -y && dnf install -y gitlab-runner",
-        "groupadd docker || true",
-        "usermod -aG docker gitlab-runner",
-        "usermod -aG wheel gitlab-runner",
-        "dnf clean all -y",
-        "sed -i '/swap/s/^/#/g' /etc/fstab"
+      "environment_vars": [
+        "SSH_USERNAME={{user `ssh_username`}}",
+        "SSH_PASSWORD={{user `ssh_password`}}"
       ],
       "pause_before": "10s",
+      "scripts": [
+        "scripts/centos/00-base.sh",
+        "scripts/centos/99-gitlab-runner.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "environment_vars": [
+        "SSH_USERNAME={{user `ssh_username`}}",
+        "SSH_PASSWORD={{user `ssh_password`}}"
+      ],
+      "pause_before": "10s",
+      "inline": [
+        "dnf clean all -y"
+      ],
       "type": "shell"
     }
-  ]
+  ],
+  "variables": {
+    "version": "1.0.0",
+    "cpus": "1",
+    "memory": "512",
+    "disk_size": "100G",
+    "ssh_password": "root",
+    "ssh_username": "root"
+  }
 }
