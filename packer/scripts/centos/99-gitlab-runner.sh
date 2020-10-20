@@ -27,7 +27,7 @@ msg "Running Gitlab runner installation..."
 
 msg "Installing base requirments..."
 
-dnf install -y wget curl git
+dnf install -y wget curl
 
 msg "Installing Gitlab runner..."
 
@@ -38,8 +38,6 @@ chmod +x /tmp/script.rpm.sh && os=el dist=7 /tmp/script.rpm.sh
 dnf update -y && dnf install -y gitlab-runner
 
 msg_info "Adding Docker group to gitlab-runner user..."
-
-groupadd docker || true
 
 usermod -aG docker gitlab-runner
 

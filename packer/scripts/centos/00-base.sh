@@ -2,6 +2,8 @@
 
 set -e
 
+NODE_EXPORTER_VER=0.18.1
+
 msg() {
   printf " --------------\n"
   printf ' >>>> %s\n' "$@"
@@ -35,7 +37,7 @@ dnf install -y epel-release && dnf update -y
 
 msg "Installing basic packages..."
 
-dnf install -y wget htop nmon
+dnf install -y curl wget htop nmon
 
 msg "Installing Docker..."
 
@@ -46,6 +48,26 @@ dnf install -y docker-ce docker-ce-cli
 systemctl enable docker && systemctl start docker
 
 groupadd docker || true
+
+msg "Installing sysctl tuning file..."
+
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/tune-sysctl.conf > /etc/sysctl.d/01-tune.conf
+
+msg "Installing limits file..."
+
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/limits.conf > /etc/security/limits.d/limits.conf
+
+msg "Installing Prometheus Node Exporter..."
+
+cd /tmp && wget https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VER}/node_exporter-${NODE_EXPORTER_VER}.linux-amd64.tar.gz
+
+cd /tmp && tar -xvf ./node_exporter-${NODE_EXPORTER_VER}.linux-amd64.tar.gz
+
+mv -v /tmp/node_exporter-${NODE_EXPORTER_VER}.linux-amd64/node_exporter /usr/local/bin/node_exporter
+
+chown root:root /usr/local/bin/node_exporter
+
+rm -rf /tmp/*node_exporter*
 
 msg "Disable swap..."
 
