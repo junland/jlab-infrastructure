@@ -6,18 +6,18 @@ _Repo is based upon [stardata/packer-centos7-kvm-example](https://github.com/sta
 
 ## Configs
 
-* `centos8-base.json` - Base CentOS 8 image with a 95 GB primary hard disk.
+* `centos8-base.json` - Base CentOS 8 image with a 25 GB primary hard disk as default.
     * `docker-ce` pre-installed.
     * `git` pre-installed.
     * `epel` repository enabled.
     * Basic monitoring tools installed.
-* `centos8-faas.json` - CentOS 8 image with a 100 GB primary hard disk, image is for using openFaaS.
+* `centos8-faas.json` - CentOS 8 image with a 100 GB primary hard disk as default, image is for using openFaaS.
     * `docker-ce` pre-installed.
     * `open-faas` pre-installed w/ access to `docker`.
     * `git` pre-installed.
     * `epel` repository enabled.
     * Basic monitoring tools installed.
-* `centos8-gitlab.json` - CentOS 8 image with a 100 GB primary hard disk, image is for deploying Gitlab Runners.
+* `centos8-gitlab.json` - CentOS 8 image with a 100 GB primary hard disk as default, image is for deploying Gitlab Runners.
     * `docker-ce` pre-installed.
     * `gitlab-runner` pre-installed w/ access to `docker`.
     * `git` pre-installed.
