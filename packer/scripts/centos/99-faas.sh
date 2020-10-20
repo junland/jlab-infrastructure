@@ -35,7 +35,7 @@ dnf install -y wget curl git containerd
 
 msg "Installing FaaS project..."
 
-"mkdir -p /opt/cni/bin",
+mkdir -vp /opt/cni/bin
 
 curl -sSL https://github.com/containernetworking/plugins/releases/download/v${CNI_PLUGIN_VER}/cni-plugins-linux-amd64-v${CNI_PLUGIN_VER}.tgz | tar -xz -C /opt/cni/bin && ls -la /opt/cni/bin
 
