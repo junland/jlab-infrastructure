@@ -49,13 +49,17 @@ systemctl enable docker && systemctl start docker
 
 groupadd docker || true
 
-msg "Installing sysctl tuning file..."
+msg "Installing sysctl tuning config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/tune-sysctl.conf > /etc/sysctl.d/01-tune.conf
 
-msg "Installing limits file..."
+msg "Installing limits config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/limits.conf > /etc/security/limits.d/limits.conf
+
+msg "Installing sshd config file..."
+
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/sshd.conf > /etc/ssh/sshd_conf
 
 msg "Installing Prometheus Node Exporter..."
 
