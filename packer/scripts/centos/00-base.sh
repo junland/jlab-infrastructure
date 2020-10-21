@@ -83,6 +83,8 @@ msg_info "Installing Wireguard..."
 
 dnf install -y kernel-plus wireguard-tools
 
+mkdir -p /etc/wireguard
+
 msg_info "Disabling swap..."
 
 sed -i '/swap/d' /etc/fstab
