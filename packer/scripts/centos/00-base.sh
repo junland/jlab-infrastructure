@@ -25,9 +25,9 @@ msg_info "Update system..."
 
 dnf update -y
 
-msg_info "Installing epel-release..."
+msg_info "Installing epel-release and yum utilities..."
 
-dnf install -y epel-release && dnf update -y
+dnf install -y epel-release yum-utils && dnf update -y
 
 msg_info "Installing basic packages..."
 
@@ -72,6 +72,16 @@ mv -v /tmp/node_exporter-${NODE_EXPORTER_VER}.linux-amd64/node_exporter /usr/loc
 chown root:root /usr/local/bin/node_exporter
 
 rm -rf /tmp/*node_exporter*
+
+msg_info "Enable CentOS Plus Kernel..."
+
+yum-config-manager --setopt=centosplus.includepkgs="kernel-plus, kernel-plus-*" --setopt=centosplus.enabled=1 --save
+
+sed -e 's/^DEFAULTKERNEL=kernel-core$/DEFAULTKERNEL=kernel-plus-core/' -i /etc/sysconfig/kernel
+
+msg_info "Installing Wireguard..."
+
+dnf install kernel-plus wireguard-tools
 
 msg_info "Disabling swap..."
 
