@@ -81,7 +81,7 @@ sed -e 's/^DEFAULTKERNEL=kernel-core$/DEFAULTKERNEL=kernel-plus-core/' -i /etc/s
 
 msg_info "Installing Wireguard..."
 
-dnf install kernel-plus wireguard-tools
+dnf install -y kernel-plus wireguard-tools
 
 msg_info "Disabling swap..."
 
