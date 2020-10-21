@@ -4,12 +4,6 @@ set -e
 
 NODE_EXPORTER_VER=1.0.1
 
-msg() {
-  printf " --------------\n"
-  printf ' >>>> %s\n' "$@"
-  printf " --------------\n"
-}
-
 msg_info() {
   echo -e "\e[94m >>>> $1 \e[0m"
 }
@@ -25,21 +19,21 @@ msg_info "Getting OS info..."
 
 . /etc/os-release
 
-msg "Running base system installation..."
+msg_info "Running base system installation..."
 
-msg "Update system..."
+msg_info "Update system..."
 
 dnf update -y
 
-msg "Installing epel-release..."
+msg_info "Installing epel-release..."
 
 dnf install -y epel-release && dnf update -y
 
-msg "Installing basic packages..."
+msg_info "Installing basic packages..."
 
 dnf install -y curl wget htop nmon
 
-msg "Installing Docker..."
+msg_info "Installing Docker..."
 
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y
 
@@ -49,25 +43,25 @@ systemctl enable docker && systemctl start docker
 
 groupadd docker || true
 
-msg "Installing sysctl tuning config file..."
+msg_info "Installing sysctl tuning config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/tune-sysctl.conf > /etc/sysctl.d/01-tune.conf
 
-msg "Installing limits config file..."
+msg_info "Installing limits config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/limits.conf > /etc/security/limits.d/limits.conf
 
-msg "Installing sshd config file..."
+msg_info "Installing sshd config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/sshd.conf > /etc/ssh/sshd_conf
 
-msg "Installing issue file..."
+msg_info "Installing issue file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/issue > /etc/issue
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/issue.net > /etc/issue.net
 
-msg "Installing Prometheus Node Exporter..."
+msg_info "Installing Prometheus Node Exporter..."
 
 cd /tmp && wget https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VER}/node_exporter-${NODE_EXPORTER_VER}.linux-amd64.tar.gz
 
@@ -79,12 +73,12 @@ chown root:root /usr/local/bin/node_exporter
 
 rm -rf /tmp/*node_exporter*
 
-msg "Disabling swap..."
+msg_info "Disabling swap..."
 
 sed -i '/swap/d' /etc/fstab
 
-msg "Clean up everything..."
+msg_info "Clean up everything..."
 
 dnf clean all -y
 
-msg "Finished $0..."
+msg_info "Finished $0..."

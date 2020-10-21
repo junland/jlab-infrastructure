@@ -6,12 +6,6 @@ FAAS_CLI_VER=0.12.14
 FAAS_D_VER=0.9.5
 CNI_PLUGIN_VER=0.8.7
 
-msg() {
-  printf " --------------\n"
-  printf ' >>>> %s\n' "$@"
-  printf " --------------\n"
-}
-
 msg_info() {
   echo -e "\e[94m >>>> $1 \e[0m"
 }
@@ -27,13 +21,13 @@ msg_info "Getting OS info..."
 
 . /etc/os-release
 
-msg "Running FaaS installation..."
+msg_info "Running FaaS installation..."
 
-msg "Installing base requirments..."
+msg_info "Installing base requirments..."
 
 dnf install -y wget curl git containerd
 
-msg "Installing FaaS project..."
+msg_info "Installing FaaS project..."
 
 mkdir -vp /opt/cni/bin
 
@@ -47,8 +41,8 @@ curl -sSL https://github.com/openfaas/faasd/releases/download/${FAAS_D_VER}/faas
 
 chmod 777 /usr/local/bin/faasd
 
-msg "Clean up everything..."
+msg_info "Clean up everything..."
 
 dnf clean all -y
 
-msg "Finished $0..."
+msg_info "Finished $0..."

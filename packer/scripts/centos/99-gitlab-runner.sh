@@ -2,12 +2,6 @@
 
 set -e
 
-msg() {
-  printf " --------------\n"
-  printf ' >>>> %s\n' "$@"
-  printf " --------------\n"
-}
-
 msg_info() {
   echo -e "\e[94m >>>> $1 \e[0m"
 }
@@ -23,13 +17,13 @@ msg_info "Getting OS info..."
 
 . /etc/os-release
 
-msg "Running Gitlab runner installation..."
+msg_info "Running Gitlab runner installation..."
 
-msg "Installing base requirments..."
+msg_info "Installing base requirments..."
 
 dnf install -y wget curl
 
-msg "Installing Gitlab runner..."
+msg_info "Installing Gitlab runner..."
 
 curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh > /tmp/script.rpm.sh
 
@@ -43,8 +37,8 @@ usermod -aG docker gitlab-runner
 
 usermod -aG wheel gitlab-runner
 
-msg "Clean up everything..."
+msg_info "Clean up everything..."
 
 dnf clean all -y
 
-msg "Finished $0..."
+msg_info "Finished $0..."
