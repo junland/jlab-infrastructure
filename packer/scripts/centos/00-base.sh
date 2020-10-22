@@ -43,6 +43,12 @@ systemctl enable docker && systemctl start docker
 
 groupadd docker || true
 
+firewall-cmd --permanent --direct --passthrough ipv4 -I FORWARD -i docker0 -j ACCEPT
+
+firewall-cmd --permanent --direct --passthrough ipv4 -I FORWARD -o docker0 -j ACCEPT
+
+firewall-cmd --reload
+
 msg_info "Installing sysctl tuning config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/tune-sysctl.conf > /etc/sysctl.d/01-tune.conf
