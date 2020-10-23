@@ -60,3 +60,24 @@ To add upload capability, add the below code.
       "destination": "/packer-upload"
     },
 ```
+
+Also on `CentOS 8` you may need to change `qemu_binary`
+```
+{
+  "variables": {
+    "hostname": "yourfqdn",
+    "qemu_path": "{{env `PWD`}}"
+  },
+  "builders":
+  [
+    {
+      "type": "qemu",
+      "accelerator": "kvm",
+      "qemu_binary": "/usr/libexec/qemu-kvm",
+      "qemuargs": [
+         [ "-m", "4096" ],
+         [ "-smp", "2,sockets=2,cores=1,threads=1" ]
+      ],
+   }
+]
+```
