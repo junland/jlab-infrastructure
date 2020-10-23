@@ -31,7 +31,17 @@ dnf install -y epel-release yum-utils && dnf update -y
 
 msg_info "Installing basic packages..."
 
-dnf install -y curl wget htop nmon
+dnf install -y curl wget htop nmon git qemu-img drpm
+
+msg_info "Removing comments and whitespace from dnf / yum config file..."
+
+sed -i -e '/^[ \t]*#/d' /etc/yum.conf
+
+sed -i '/^$/d' /etc/yum.conf
+
+msg_info "Adding drpm configuration..."
+
+grep -q '^deltarpm' file && sed -i 's/^deltarpm.*/deltarpm=True/' file || echo 'deltarpm=True' >> /etc/yum.conf
 
 msg_info "Installing Docker..."
 
