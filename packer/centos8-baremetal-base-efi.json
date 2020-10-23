@@ -58,7 +58,8 @@
          ],
          "pause_before":"10s",
          "scripts":[
-            "scripts/centos/00-base.sh"
+            "scripts/centos/00-base.sh",
+            "scripts/centos/01-baremetal.sh"
          ],
          "type":"shell"
       },
