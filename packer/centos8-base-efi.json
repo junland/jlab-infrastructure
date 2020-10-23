@@ -8,7 +8,6 @@
          "boot_wait": "10s",
          "disk_interface": "virtio",
          "disk_size": "{{ user `disk_size` }}",
-         "disk_compression": true,
          "format": "qcow2",
          "headless": true,
          "host_port_max": 2229,
