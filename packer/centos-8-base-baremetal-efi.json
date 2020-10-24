@@ -2,6 +2,7 @@
    "builders":[
       {
          "accelerator": "kvm",
+         "qemu_binary": "{{user `qemu_bin`}}",
          "boot_command":[
             "<up>e<wait><down><down><end><bs><bs><bs><bs><bs> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-kvm-ks.cfg <leftCtrlOn>x<leftCtrlOff><wait>"
          ],
@@ -80,6 +81,7 @@
       "version": "1.0.0",
       "cpus": "1",
       "memory": "1G",
+      "qemu_bin": "/usr/bin/qemu-system-x86_64",
       "disk_size": "465G",
       "ssh_password": "root",
       "ssh_username": "root"
