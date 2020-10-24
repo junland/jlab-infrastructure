@@ -69,7 +69,7 @@ curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansibl
 
 msg_info "Installing sshd config file..."
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/sshd.conf > /etc/ssh/sshd_conf
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/sshd.conf > /etc/ssh/sshd_config
 
 msg_info "Installing issue file..."
 
