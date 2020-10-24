@@ -25,9 +25,9 @@ msg_info "Update system..."
 
 dnf update -y
 
-msg_info "Installing epel-release and yum utilities..."
+msg_info "Installing epel-release, elrepo-release and yum utilities..."
 
-dnf install -y epel-release yum-utils && dnf update -y
+dnf install -y epel-release elrepo-release yum-utils && dnf update -y
 
 msg_info "Installing basic packages..."
 
@@ -95,15 +95,15 @@ chown root:root /usr/local/bin/node_exporter
 
 rm -rf /tmp/*node_exporter*
 
-msg_info "Enable CentOS Plus Kernel..."
+#msg_info "Enable CentOS Plus Kernel..."
 
-yum-config-manager --setopt=centosplus.includepkgs="kernel-plus, kernel-plus-*" --setopt=centosplus.enabled=1 --save -y
+#yum-config-manager --setopt=centosplus.includepkgs="kernel-plus, kernel-plus-*" --setopt=centosplus.enabled=1 --save -y
 
-sed -e 's/^DEFAULTKERNEL=kernel-core$/DEFAULTKERNEL=kernel-plus-core/' -i /etc/sysconfig/kernel
+#sed -e 's/^DEFAULTKERNEL=kernel-core$/DEFAULTKERNEL=kernel-plus-core/' -i /etc/sysconfig/kernel
 
 msg_info "Installing Wireguard..."
 
-dnf install -y kernel-plus wireguard-tools
+dnf install kmod-wireguard wireguard-tools -y
 
 mkdir -p /etc/wireguard
 
