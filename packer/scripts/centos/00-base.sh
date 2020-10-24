@@ -79,9 +79,9 @@ curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer
 
 msg_info "Installing motd generation script..."
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/scripts/gen_motd_centos > /usr/local/bin/gen_motd
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/scripts/gen-motd-centos > /usr/local/bin/gen-motd
 
-chmod +x /usr/local/bin/gen_motd
+chmod +x /usr/local/bin/gen-motd
 
 msg_info "Installing Prometheus Node Exporter..."
 
@@ -113,7 +113,7 @@ sed -i '/swap/d' /etc/fstab
 
 msg_info "Generating motd..."
 
-/usr/local/bin/gen_motd
+/usr/local/bin/gen-motd
 
 msg_info "Clean up everything..."
 
