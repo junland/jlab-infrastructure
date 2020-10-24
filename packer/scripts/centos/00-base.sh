@@ -53,9 +53,9 @@ systemctl enable docker && systemctl start docker
 
 groupadd docker || true
 
-firewall-cmd --permanent --direct --passthrough ipv4 -I FORWARD -i docker0 -j ACCEPT
+msg_info "Adding docker0 bridge as a trusted zone..."
 
-firewall-cmd --permanent --direct --passthrough ipv4 -I FORWARD -o docker0 -j ACCEPT
+firewall-cmd --permanent --zone=trusted --change-interface=docker0
 
 firewall-cmd --reload
 
@@ -77,9 +77,11 @@ curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/issue.net > /etc/issue.net
 
-msg_info "Installing motd file..."
+msg_info "Installing motd generation script..."
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/motd > /etc/motd
+curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/scripts/gen_motd_centos > /usr/local/bin/gen_motd
+
+chmod +x /usr/local/bin/gen_motd
 
 msg_info "Installing Prometheus Node Exporter..."
 
@@ -108,6 +110,10 @@ mkdir -p /etc/wireguard
 msg_info "Disabling swap..."
 
 sed -i '/swap/d' /etc/fstab
+
+msg_info "Generating motd..."
+
+/usr/local/bin/gen_motd
 
 msg_info "Clean up everything..."
 
