@@ -2,25 +2,16 @@
 # Original script by JKE (http://keihsler.com/redmine/projects/dw_os_cos7/wiki/Setup_motd)
 # Adapted by John Unland (junland)
 
+echo " >>> Generating MOTD..."
+
 echo -e " 
 *******************************************************************
-* jlab Infra Server                                               *
-* ==================                                              *
-*                                                                 *
-* This system is for the use of authorized users only. Usage of   *
-* this system will be monitored and recorded by system personnel. *
-*                                                                 *
-* Anyone using this system expressly consents to such monitoring  *
-* and is advised that if such monitoring reveals possible         *
-* evidence of criminal activity, system personel may provide the  *
-* evidence from such monitoring to law enforcement officials.     *
-*                                                                 *
-*******************************************************************
-* Version   = `cat /etc/centos-release`
+* Version   = jlab Infrastructure OS, powered by `cat /etc/centos-release`
 * Kernel    = `uname -r`
 * Uptime    = `uptime | sed 's/.*up \([^,]*\), .*/\1/'`
 * Mem /free = `cat /proc/meminfo | grep MemTotal | awk {'print $2'}` kB / `cat /proc/meminfo | grep MemFree | awk {'print $2'}` kB 
-* Swap/free = `cat /proc/meminfo | grep SwapTotal | awk {'print $2'}` kB / `cat /proc/meminfo | grep SwapFree | awk {'print $2'}` kB
 * last updt = `date`
 *******************************************************************
 " > /etc/motd
+
+echo " >>> MOTD Generation completed..."
