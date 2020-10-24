@@ -43,6 +43,10 @@ msg_info "Adding drpm configuration..."
 
 grep -q '^deltarpm' file && sed -i 's/^deltarpm.*/deltarpm=True/' file || echo 'deltarpm=True' >> /etc/yum.conf
 
+msg_info "Adding wheel group to sudoers directory...
+
+echo "%wheel        ALL=(ALL)       ALL" > /etc/sudoers.d/wheel
+
 msg_info "Installing Docker..."
 
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y
