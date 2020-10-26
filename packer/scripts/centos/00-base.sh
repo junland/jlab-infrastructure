@@ -57,8 +57,6 @@ msg_info "Adding docker0 bridge as a trusted zone..."
 
 firewall-cmd --permanent --zone=trusted --change-interface=docker0
 
-firewall-cmd --reload
-
 msg_info "Installing sysctl tuning config file..."
 
 curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/tune-sysctl.conf > /etc/sysctl.d/01-tune.conf
@@ -106,6 +104,10 @@ msg_info "Installing Wireguard..."
 dnf install kmod-wireguard wireguard-tools -y
 
 mkdir -p /etc/wireguard
+
+msg_info "Changing GRUB distributor name..."
+
+sed -i 's/^GRUB_DISTRIBUTOR=.*$/GRUB_DISTRIBUTOR=\"jlab Infrastructure OS\"/' /etc/default/grub
 
 msg_info "Disabling swap..."
 
