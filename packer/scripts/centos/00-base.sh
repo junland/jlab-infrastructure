@@ -109,6 +109,8 @@ msg_info "Changing GRUB distributor name..."
 
 sed -i 's/^GRUB_DISTRIBUTOR=.*$/GRUB_DISTRIBUTOR=\"jlab Infrastructure OS\"/' /etc/default/grub
 
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
 msg_info "Disabling swap..."
 
 sed -i '/swap/d' /etc/fstab
