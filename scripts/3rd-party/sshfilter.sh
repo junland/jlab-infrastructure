@@ -1,5 +1,7 @@
 #!/bin/bash
-# License: WTFPL
+# SPDX-Identifer: WTFPL
+# Copyright (c) 2015 Markus Ullmann
+# Copyright (C) 2020 John Unland (Forked)
 
 # UPPERCASE space-separated country codes to ACCEPT
 ALLOW_COUNTRIES="US"
