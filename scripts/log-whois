@@ -1,5 +1,5 @@
 #!/bin/bash
-## SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: MIT
 # Copyright (C) 2020 John Unland
 
 LOGFILE=${VARIABLE:="/var/log/nginx/*.access.log"}
