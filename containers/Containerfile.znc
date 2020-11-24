@@ -6,12 +6,10 @@ RUN dnf install znc znc-modtcl znc-modpython znc-clientbuffer -y
 
 RUN dnf clean all
 
-RUN mkdir -p /znc
-
-WORKDIR /znc
+WORKDIR /
 
 EXPOSE 6697
 
 USER znc
 
-CMD ["znc", "--foreground", "--datadir", "/znc"]
+CMD ["znc", "--foreground", "--datadir", "/etc/znc"]
