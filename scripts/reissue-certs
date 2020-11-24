@@ -1,0 +1,11 @@
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2020 John Unland
+
+DNS_PROVIDER=${VARIABLE:="dns_dgon"}
+
+echo "Re-issuing certs..." && sleep 3
+
+acme.sh --issue -d jlab.space -d *.jlab.space --dns ${DNS_PROVIDER} --keylength 4096
+
+exit 0
