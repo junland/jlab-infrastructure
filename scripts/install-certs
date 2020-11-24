@@ -1,0 +1,17 @@
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2020 John Unland
+
+echo "Touching directories if.."
+
+mkdir -p /etc/nginx/acme.sh/jlab.space
+
+echo "Installing Certs..."
+
+acme.sh --install-cert -d jlab.space \
+--cert-file /etc/nginx/acme.sh/jlab.space/cert.pem \
+--key-file /etc/nginx/acme.sh/jlab.space/key.pem \
+--fullchain-file /etc/nginx/acme.sh/jlab.space/fullchain.pem \
+--reloadcmd "systemctl restart nginx"
+
+exit 0
