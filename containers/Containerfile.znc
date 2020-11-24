@@ -10,4 +10,4 @@ WORKDIR /
 
 EXPOSE 6697
 
-CMD ["znc", "--foreground", "--datadir", "/znc"]
+CMD ["znc", "--foreground", "--allow-root", "--datadir", "/znc"]
