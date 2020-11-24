@@ -10,4 +10,4 @@ WORKDIR /
 
 EXPOSE 6697
 
-CMD ["znc", "--foreground", "--datadir", "/etc/znc"]
+CMD ["znc", "--foreground", "--datadir", "/znc"]
