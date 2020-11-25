@@ -8,6 +8,6 @@ RUN dnf clean all
 
 WORKDIR /
 
-EXPOSE 6697
+EXPOSE 1000 1001
 
 CMD ["znc", "--foreground", "--allow-root", "--datadir", "/znc"]
