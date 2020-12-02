@@ -41,7 +41,7 @@ sed -i '/^$/d' /etc/yum.conf
 
 msg_info "Adding drpm configuration..."
 
-grep -q '^deltarpm' file && sed -i 's/^deltarpm.*/deltarpm=True/' file || echo 'deltarpm=True' >> /etc/yum.conf
+grep -q '^deltarpm' /etc/yum.conf && sed -i 's/^deltarpm.*/deltarpm=True/' /etc/yum.conf || echo 'deltarpm=True' >> /etc/yum.conf
 
 msg_info "Installing Docker..."
 
