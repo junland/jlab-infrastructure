@@ -40,7 +40,7 @@ jfrog bt vc junland/jlab/<program name>/<version name>
 ```
 
 ```
-jfrag bt u "somedir/*.rpm" junland/jlab/<program name>/<version name> DISTRO/VER/ARCH/RPMS
+jfrog bt u "somedir/*.rpm" junland/jlab/<program name>/<version name> DISTRO/VER/ARCH/RPMS
 ```
 
 ## Helpful Links
