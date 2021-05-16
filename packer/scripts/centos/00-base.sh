@@ -48,8 +48,6 @@ msg_info "Installing Docker..."
 
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y
 
-dnf remove -y @container-tools 
-
 dnf install -y docker-ce docker-ce-cli
 
 systemctl enable docker && systemctl start docker
