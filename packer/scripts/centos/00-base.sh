@@ -2,7 +2,7 @@
 
 set -e
 
-NODE_EXPORTER_VER=1.0.1
+NODE_EXPORTER_VER=1.1.2
 
 msg_info() {
   echo -e "\e[94m >>>> $1 \e[0m"
