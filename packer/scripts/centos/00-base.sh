@@ -32,7 +32,7 @@ dnf install -y epel-release elrepo-release yum-utils && dnf update -y
 
 msg_info "Installing basic packages..."
 
-dnf install -y curl wget htop nmon git qemu-img drpm
+dnf install -y curl wget htop nmon git qemu-img drpm bridge-utils
 
 msg_info "Removing comments and whitespace from dnf / yum config file..."
 
