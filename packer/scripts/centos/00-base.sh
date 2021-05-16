@@ -93,15 +93,7 @@ chown root:root /usr/local/bin/node_exporter
 
 rm -rf /tmp/*node_exporter*
 
-#msg_info "Enable CentOS Plus Kernel..."
-
-#yum-config-manager --setopt=centosplus.includepkgs="kernel-plus, kernel-plus-*" --setopt=centosplus.enabled=1 --save -y
-
-#sed -e 's/^DEFAULTKERNEL=kernel-core$/DEFAULTKERNEL=kernel-plus-core/' -i /etc/sysconfig/kernel
-
 msg_info "Installing Wireguard..."
-
-dnf install kmod-wireguard wireguard-tools -y
 
 mkdir -p /etc/wireguard
 
