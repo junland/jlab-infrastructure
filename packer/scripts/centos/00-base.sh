@@ -3,6 +3,7 @@
 set -e
 
 NODE_EXPORTER_VER=1.1.2
+NONROOT_USERNAME=admin
 
 msg_info() {
   echo -e "\e[94m >>>> $1 \e[0m"
@@ -47,11 +48,15 @@ msg_info "Installing Docker..."
 
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo -y && dnf update -y
 
+dnf remove -y @container-tools 
+
 dnf install -y docker-ce docker-ce-cli
 
 systemctl enable docker && systemctl start docker
 
 groupadd docker || true
+
+usermod -aG docker "${NONROOT_USERNAME}"
 
 msg_info "Adding docker0 bridge as a trusted zone..."
 
