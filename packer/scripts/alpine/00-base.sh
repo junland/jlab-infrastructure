@@ -2,7 +2,6 @@
 
 set -e
 
-NODE_EXPORTER_VER=1.1.2
 NONROOT_USERNAME=admin
 
 msg_info() {
@@ -22,7 +21,7 @@ msg_info "Getting OS info..."
 
 msg_info "Running base system installation..."
 
-msg_info "Update system ${SSH_PASSWORD}..."
+msg_info "Update system..."
 
 apk update
 
@@ -40,6 +39,10 @@ rm -rf /tmp/*node_exporter*
 
 msg_info "Installing Wireguard..."
 
+apk add wireguard-tools
+
 mkdir -p /etc/wireguard
+
+echo "wireguard" >> /etc/modules
 
 msg_info "Finished $0..."
