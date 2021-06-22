@@ -3,7 +3,9 @@
 set -e
 
 NODE_EXPORTER_VER=1.1.2
+TERRAFORM_VER=1.0.0
 NONROOT_USERNAME=admin
+PACKER_UPLOAD_DIR=/tmp/files
 
 msg_info() {
   echo -e "\e[94m >>>> $1 \e[0m"
@@ -62,27 +64,21 @@ firewall-cmd --permanent --zone=trusted --change-interface=docker0
 
 msg_info "Installing sysctl tuning config file..."
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/tune-sysctl.conf > /etc/sysctl.d/01-tune.conf
+cat ${PACKER_UPLOAD_DIR}/tune-sysctl.conf > /etc/sysctl.d/01-tune.conf
 
 msg_info "Installing limits config file..."
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/limits.conf > /etc/security/limits.d/limits.conf
+cat ${PACKER_UPLOAD_DIR}/limits.conf > /etc/security/limits.d/limits.conf
 
 msg_info "Installing sshd config file..."
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/ansible/roles/base/files/sshd.conf > /etc/ssh/sshd_config
+cat ${PACKER_UPLOAD_DIR}/sshd.conf > /etc/ssh/sshd_config
 
 msg_info "Installing issue file..."
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/issue > /etc/issue
+cat ${PACKER_UPLOAD_DIR}/issue > /etc/issue
 
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/packer/files/issue.net > /etc/issue.net
-
-msg_info "Installing motd generation script..."
-
-curl https://raw.githubusercontent.com/junland/jlab-infrastructure/master/scripts/gen-motd-centos > /usr/local/bin/gen-motd
-
-chmod +x /usr/local/bin/gen-motd
+cat ${PACKER_UPLOAD_DIR}/issue.net > /etc/issue.net
 
 msg_info "Installing Prometheus Node Exporter..."
 
@@ -92,17 +88,31 @@ cd /tmp && tar -xvf ./node_exporter-${NODE_EXPORTER_VER}.linux-amd64.tar.gz
 
 mv -v /tmp/node_exporter-${NODE_EXPORTER_VER}.linux-amd64/node_exporter /usr/local/bin/node_exporter
 
-chown root:root /usr/local/bin/node_exporter
+chown root:root /usr/local/bin/node_exporter && chmod +x /usr/local/bin/node_exporter
 
 rm -rf /tmp/*node_exporter*
+
+msg_info "Installing Terraform CLI..."
+
+cd /tmp && wget https://releases.hashicorp.com/terraform/1.0.0/terraform_${TERRAFORM_VER}_linux_amd64.zip
+
+cd /tmp && unzip ./terraform_${TERRAFORM_VER}_linux_amd64.zip
+
+mv -v /tmp/terraform /usr/local/bin/terraform
+
+chown root:root /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform
+
+rm -rf /tmp/*terraform*
 
 msg_info "Installing Wireguard..."
 
 mkdir -p /etc/wireguard
 
+dnf install wireguard-tools -y
+
 msg_info "Changing GRUB distributor name..."
 
-sed -i 's/^GRUB_DISTRIBUTOR=.*$/GRUB_DISTRIBUTOR=\"jlab Infrastructure OS\"/' /etc/default/grub
+sed -i 's/^GRUB_DISTRIBUTOR=.*$/GRUB_DISTRIBUTOR=\"InfrastructureOS\"/' /etc/default/grub
 
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
@@ -110,9 +120,13 @@ msg_info "Disabling swap..."
 
 sed -i '/swap/d' /etc/fstab
 
-msg_info "Generating motd..."
+msg_info "Adding hostnamectl changes..."
 
-/usr/local/bin/gen-motd
+hostnamectl set-chassis embedded
+
+hostnamectl set-deployment production
+
+hostnamectl set-icon-name computer
 
 msg_info "Clean up everything..."
 
