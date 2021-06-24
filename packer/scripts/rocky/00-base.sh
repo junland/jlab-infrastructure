@@ -24,6 +24,14 @@ msg_info "Getting OS info..."
 
 msg_info "Running base system installation..."
 
+msg_info "Configuring dnf..."
+
+grep -q '^max_parallel_downloads' /etc/dnf/dnf.conf && sed -i 's/^max_parallel_downloads.*/max_parallel_downloads=10/' /etc/dnf/dnf.conf || echo 'max_parallel_downloads=10' >> /etc/dnf/dnf.conf
+
+grep -q '^fastestmirror' /etc/dnf/dnf.conf && sed -i 's/^fastestmirror.*/fastestmirror=1/' /etc/dnf/dnf.conf || echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
+
+grep -q '^install_weak_deps' /etc/dnf/dnf.conf && sed -i 's/^install_weak_deps.*/install_weak_deps=False/' /etc/dnf/dnf.conf || echo 'install_weak_deps=False' >> /etc/dnf/dnf.conf
+
 msg_info "Update system..."
 
 dnf update -y
@@ -44,7 +52,7 @@ sed -i '/^$/d' /etc/yum.conf
 
 msg_info "Adding drpm configuration..."
 
-grep -q '^deltarpm' /etc/yum.conf && sed -i 's/^deltarpm.*/deltarpm=True/' /etc/yum.conf || echo 'deltarpm=True' >> /etc/yum.conf
+grep -q '^deltarpm' /etc/dnf/dnf.conf && sed -i 's/^deltarpm.*/deltarpm=True/' /etc/dnf/dnf.conf || echo 'deltarpm=True' >> /etc/dnf/dnf.conf
 
 msg_info "Installing Docker..."
 
@@ -57,10 +65,6 @@ systemctl enable docker && systemctl start docker
 groupadd docker || true
 
 usermod -aG docker "${NONROOT_USERNAME}"
-
-msg_info "Adding docker0 bridge as a trusted zone..."
-
-firewall-cmd --permanent --zone=trusted --change-interface=docker0
 
 msg_info "Installing sysctl tuning config file..."
 
@@ -127,6 +131,10 @@ hostnamectl set-chassis embedded
 hostnamectl set-deployment production
 
 hostnamectl set-icon-name computer
+
+msg_info "Adding ports for ssh..."
+
+firewall-cmd --zone=public --add-service=ssh --permanent
 
 msg_info "Clean up everything..."
 

@@ -10,7 +10,7 @@ variable "disk_size" {
 
 variable "memory" {
   type    = string
-  default = "1G"
+  default = "1.5G"
 }
 
 variable "ssh_password" {
@@ -56,7 +56,7 @@ source "qemu" "rocky" {
   ssh_port         = 22
   ssh_timeout      = "2400s"
   ssh_username     = "${var.ssh_username}"
-  vm_name          = "rocky-base-efi.qcow2"
+  vm_name          = "rocky-core-cluster.qcow2"
 }
 
 build {
@@ -70,12 +70,12 @@ build {
   provisioner "shell" {
     environment_vars = ["SSH_USERNAME=${var.ssh_username}", "SSH_PASSWORD=${var.ssh_password}"]
     pause_before     = "10s"
-    scripts          = ["scripts/rocky/00-base.sh"]
+    scripts          = ["scripts/rocky/00-base.sh", "scripts/rocky/01-kvm.sh", "scripts/rocky/02-mariadb.sh", "scripts/rocky/03-k3s.sh"]
   }
 
   provisioner "shell" {
     environment_vars = ["SSH_USERNAME=${var.ssh_username}", "SSH_PASSWORD=${var.ssh_password}"]
-    inline           = ["dnf clean all -y", "dnf remove -y --oldinstallonly --setopt installonly_limit=2 kernel || true"]
+    inline           = ["dnf clean all -y", "dnf autoremove -y"]
     pause_before     = "10s"
   }
 
