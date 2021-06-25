@@ -13,6 +13,11 @@ variable "memory" {
   default = "1.5G"
 }
 
+variable "hostname" {
+  type    = string
+  default = "ClusterOS"
+}
+
 variable "ssh_password" {
   type    = string
   default = "root"
@@ -71,6 +76,12 @@ build {
     environment_vars = ["SSH_USERNAME=${var.ssh_username}", "SSH_PASSWORD=${var.ssh_password}"]
     pause_before     = "10s"
     scripts          = ["scripts/rocky/00-base.sh", "scripts/rocky/01-kvm.sh", "scripts/rocky/02-mariadb.sh", "scripts/rocky/03-k3s.sh"]
+  }
+  
+  provisioner "shell" {
+    environment_vars = ["SSH_USERNAME=${var.ssh_username}", "SSH_PASSWORD=${var.ssh_password}"]
+    inline           = ["hostnamectl set-hostname ${var.hostname}"]
+    pause_before     = "10s"
   }
 
   provisioner "shell" {
