@@ -118,7 +118,20 @@ msg_info "Changing GRUB distributor name..."
 
 sed -i 's/^GRUB_DISTRIBUTOR=.*$/GRUB_DISTRIBUTOR=\"InfrastructureOS\"/' /etc/default/grub
 
-grub2-mkconfig -o /boot/grub2/grub.cfg
+msg_info "Update GRUB..."
+
+grub2-mkconfig -o /etc/grub2.cfg
+
+msg_info "Update GRUB (UEFI)..."
+
+grub2-mkconfig -o /etc/grub2-efi.cfg
+
+msg_info "Rebranding GRUB entries..."
+
+for c in /boot/loader/entries/*.conf; do 
+   echo "Processing $c entry file..";
+   sed -i 's/^title Rocky Linux/title InfraOS/g' $c
+done
 
 msg_info "Disabling swap..."
 
